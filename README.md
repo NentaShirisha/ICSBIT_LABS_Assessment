@@ -5,7 +5,7 @@ Submission for: **Frontend + UX Design Challenge — Industrial Cybersecurity Pl
 
 ## View the prototype
 
-Live, clickable prototype: **https://claude.ai/artifact/UePVuuL5Zy1duYojbDTpMD**
+
 
 The prototype is a private link. If you need to share it with someone else, open it and use the
 page's own **Share** menu — this repo copy does not change that.
