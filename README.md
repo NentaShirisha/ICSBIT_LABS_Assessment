@@ -1,7 +1,7 @@
 # GridWatch OT - Dashboard & Attack Path Design
 
 This is my submission for the Frontend + UX Design Challenge (Industrial Cybersecurity Platform).
-The original brief PDF is in the parent `assi` folder.
+
 
 
 I built this as a clickable prototype instead of static screens so the interactions (drill-downs,
