@@ -1,50 +1,44 @@
-# GridWatch OT — Frontend + UX Design Challenge
+# GridWatch OT - Dashboard & Attack Path Design
 
-Submission for: **Frontend + UX Design Challenge — Industrial Cybersecurity Platform**
-(`Frontend_UX_Design_Challenge_OT_Security.pdf`, in the parent folder)
-
-## View the prototype
+This is my submission for the Frontend + UX Design Challenge (Industrial Cybersecurity Platform).
+The original brief PDF is in the parent `assi` folder.
 
 
+I built this as a clickable prototype instead of static screens so the interactions (drill-downs,
+node selection, filters, path highlighting) could actually be tried out rather than just described.
+Open the link above to click through it - the raw files in `project/` are the source but they
+won't display properly if you just open them as plain HTML in a browser, since they depend on the
+platform they were built in.
 
-The prototype is a private link. If you need to share it with someone else, open it and use the
-page's own **Share** menu — this repo copy does not change that.
+## What I made
 
-> The `.dc.html` files in `project/` are the raw source of that prototype. They depend on a
-> runtime (`support.js`) and a design-canvas engine injected by the artifact platform when the
-> page is opened there — opening them as plain local HTML files will **not** render the styled,
-> interactive experience. They're kept here as the source of record alongside the brief, not as
-> a standalone app. Use the link above to actually view and click through the design.
+- **Main.dc.html** - the main dashboard. KPI row at the top (the two red/orange ones are meant to
+  draw the eye first since they're the "needs attention now" numbers), then risk & findings, the
+  attack path preview card, sensor/platform health, a change timeline, asset breakdown and a small
+  topology view. Clicking a KPI expands a drawer under it with the actual assets/findings behind
+  that number.
+- **AttackPath.dc.html** - the investigation workspace. There are 3 example paths, the highest
+  severity one is highlighted by default and the other two are dimmed instead of hidden. Clicking
+  any node or edge opens a side panel with the details required in the brief (summary, why it
+  matters, evidence, related findings, protocol context, recommended steps). There's a collapsed
+  "+34 more assets" node for blast radius so the graph doesn't get overwhelming, and it expands
+  when you toggle it. Zoom/fit and severity/confidence filters are also functional.
+- **States.dc.html** - a gallery of the different states asked for in the brief (normal, high-risk,
+  degraded data, uncertain/low-confidence, empty, large data volume, partial data, action feedback).
+- **Tokens.dc.html** - the colours, type scale, buttons/badges and the node/edge legend so the
+  design stays consistent if it were extended.
+- **Rationale.dc.html** - my write-up covering what I prioritised and why, how the dashboard works
+  for both leadership and analysts, how I tried to keep the attack path graph from becoming
+  overwhelming, how uncertainty/missing data is shown, how it would scale, and the assumptions I
+  made since a lot of the real product details were intentionally left out of the brief.
 
-## What's included
+## Notes on scope
 
-| Screen | File | Covers |
-|---|---|---|
-| A. Main Dashboard | `project/Main.dc.html` | Posture KPI strip with real drill-down drawers, filter bar (time range, severity, site/zone), risk & findings, attack-path preview, platform/sensor health, recent change timeline, asset visibility, network/topology insight |
-| B. Attack Path Map | `project/AttackPath.dc.html` | Interactive graph workspace: ranked paths, click-to-select nodes/edges, investigation side panel, blast-radius expand, single-path vs. all-paths toggle, severity/confidence filtering, zoom/fit controls, always-visible legend |
-| C. States Gallery | `project/States.dc.html` | The 8 required functional states (Normal, High-risk, Degraded, Unknown/Uncertain, Empty, Large volume, Partial data, Action feedback) |
-| D. Components & Tokens | `project/Tokens.dc.html` | Colour tokens (brand + severity), typography scale, buttons, badges, spacing/radius scale, graph node/edge semantics |
-| E. Design Rationale | `project/Rationale.dc.html` | Written rationale — required by brief §8.1 |
-| — | `project/canvas.json` | Canvas layout index (artboard positions/sizes) for the design-canvas platform |
-| — | `shared-styles.css` | Shared stylesheet (design tokens + component classes) used by every screen |
+Given the timebox, some things are more "demonstrated" than fully wired - the search box inside the
+graph and the mini-map are shown as real UI but aren't functionally connected to anything. Everything
+else described above (KPI drill-downs, node/edge selection, path emphasis, blast radius expand,
+filters, zoom) is actually working state in the prototype, not just a picture of it. I go into more
+detail on this, plus what I'd build next with more time, in the rationale page.
 
-## Design summary
-
-- **Palette:** required Orange / Black / White base, plus a severity ramp (Critical/High/Medium/Low)
-  and status colours (Good, Unknown) — every status is paired with an icon and/or text label, never
-  colour alone.
-- **Typography:** IBM Plex Sans for UI text, IBM Plex Mono for identifiers, IPs, CVEs and other data
-  values.
-- **Visual system:** light neutral surface for the dense dashboard content; dark chrome + dark
-  investigation canvas for the Attack Path Map, which is the common enterprise-security convention
-  for long graph-reading sessions and improves edge/line legibility.
-- **Interaction depth:** KPI drill-downs, filter chips, and the attack-path graph (node/edge
-  selection, path emphasis, blast-radius expand, zoom) are wired to real component state — this is a
-  working interactive prototype, not static comps. Scope limits (mini-map viewport sync, live text
-  search in the graph) are called out explicitly in the Design Rationale screen.
-
-## Assumptions
-
-See the **Design Rationale** screen (`project/Rationale.dc.html`, section 6) for the full list —
-in short: all names/counts/CVEs/timestamps are illustrative, "GridWatch" is a placeholder product
-name, and the design is desktop-first at 1440px per the brief's explicit allowance.
+Colours/asset names/CVEs/timestamps are all made up for the purpose of the exercise, and "GridWatch"
+is just a placeholder name I used, not a real product name.
