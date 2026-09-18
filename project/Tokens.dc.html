@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Components &amp; Tokens — GridWatch OT</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="/_blob/4198e528c0367a5df5c76f185bcda38b">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .icon{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;}
+  .sec{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px 24px;margin-bottom:20px;}
+  .sec-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint);margin-bottom:16px;}
+</style>
+</helmet>
+<div style="width:1440px;background:var(--canvas);font-size:14px;padding-bottom:20px;">
+
+<div class="util-bar">
+  <span class="util-label">CANDIDATE PROTOTYPE</span>
+  <a href="Main.dc.html">Dashboard</a>
+  <a href="AttackPath.dc.html">Attack Path Map</a>
+  <a href="States.dc.html">States Gallery</a>
+  <a href="Tokens.dc.html" class="active">Components &amp; Tokens</a>
+  <a href="Rationale.dc.html">Design Rationale</a>
+</div>
+<div class="chrome">
+  <div class="brand"><div class="brand-mark">GW</div>GRIDWATCH</div>
+  <div class="chrome-nav"><span>Dashboard</span><span>Assets</span><span>Findings</span><span>Attack Paths</span><span>Reports</span></div>
+</div>
+
+<div style="padding:28px 40px 8px;max-width:1000px;">
+  <h1 style="font-size:22px;margin:0 0 6px;">Components &amp; tokens</h1>
+  <p class="rat-p" style="margin:0;">The token set and core components used across the dashboard and attack-path surfaces, kept small deliberately so the product stays consistent as it grows.</p>
+</div>
+
+<div style="padding:16px 40px;">
+
+  <div class="sec">
+    <div class="sec-title">Colour — brand</div>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:16px;">
+      <div><div class="swatch-box" style="background:var(--orange);"></div><div class="swatch-name">Orange 500</div><div class="swatch-hex">#FF6A1A</div></div>
+      <div><div class="swatch-box" style="background:var(--orange-dark);"></div><div class="swatch-name">Orange 600</div><div class="swatch-hex">#D6540E</div></div>
+      <div><div class="swatch-box" style="background:var(--orange-tint);border:1px solid var(--line);"></div><div class="swatch-name">Orange tint</div><div class="swatch-hex">#FFF1E7</div></div>
+      <div><div class="swatch-box" style="background:var(--ink);"></div><div class="swatch-name">Ink / Black</div><div class="swatch-hex">#14171A</div></div>
+      <div><div class="swatch-box" style="background:var(--chrome);"></div><div class="swatch-name">Chrome</div><div class="swatch-hex">#121417</div></div>
+      <div><div class="swatch-box" style="background:#fff;border:1px solid var(--line);"></div><div class="swatch-name">White</div><div class="swatch-hex">#FFFFFF</div></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">Colour — severity &amp; status (never colour alone — always paired with an icon + text label)</div>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:16px;">
+      <div><div class="swatch-box" style="background:var(--crit);"></div><div class="swatch-name">Critical</div><div class="swatch-hex">#D92D20</div></div>
+      <div><div class="swatch-box" style="background:var(--orange);"></div><div class="swatch-name">High</div><div class="swatch-hex">#F97316</div></div>
+      <div><div class="swatch-box" style="background:var(--med);"></div><div class="swatch-name">Medium</div><div class="swatch-hex">#B45309</div></div>
+      <div><div class="swatch-box" style="background:var(--low);"></div><div class="swatch-name">Low</div><div class="swatch-hex">#2563EB</div></div>
+      <div><div class="swatch-box" style="background:var(--good);"></div><div class="swatch-name">Good / healthy</div><div class="swatch-hex">#16A34A</div></div>
+      <div><div class="swatch-box hatch" style="background:var(--unknown);"></div><div class="swatch-name">Unknown / no data</div><div class="swatch-hex">#6B7280</div></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">Typography — IBM Plex Sans (UI) / IBM Plex Mono (data &amp; identifiers)</div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="font-size:30px;font-weight:700;">Posture summary — 30 / 700</div>
+      <div style="font-size:22px;font-weight:700;">Section heading — 22 / 700</div>
+      <div style="font-size:14.5px;font-weight:700;">Card title — 14.5 / 700</div>
+      <div style="font-size:14px;font-weight:400;color:var(--ink-soft);">Body copy for descriptions and rationale text — 14 / 400</div>
+      <div style="font-size:12px;font-weight:600;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.05em;">Eyebrow / label — 12 / 600 uppercase</div>
+      <div class="mono" style="font-size:14px;">EWS-14 · 10.20.4.118 · CVE-2024-21334 — 14 / 500 mono for identifiers</div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">Buttons &amp; badges</div>
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px;">
+      <button type="button" class="btn btn-primary">Primary action</button>
+      <button type="button" class="btn btn-ghost">Secondary action</button>
+      <button type="button" class="btn btn-primary btn-sm">Small</button>
+      <button type="button" class="btn btn-ghost" style="opacity:.45;pointer-events:none;">Disabled</button>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <span class="badge badge-crit">Critical</span>
+      <span class="badge badge-high">High</span>
+      <span class="badge badge-med">Medium</span>
+      <span class="badge badge-low">Low</span>
+      <span class="badge badge-good">Healthy</span>
+      <span class="badge badge-unknown">Unknown</span>
+      <span class="chip active" style="background:var(--chrome);">Chip · active</span>
+      <span class="chip" style="border:1px solid var(--line);">Chip · inactive</span>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:20px;">
+    <div class="sec" style="flex:1;">
+      <div class="sec-title">Card &amp; KPI</div>
+      <div class="kpi accent-high" style="max-width:220px;">
+        <div class="kpi-top"><svg class="icon" style="color:var(--orange);"></svg></div>
+        <div class="kpi-num">24</div>
+        <div class="kpi-label">High-Priority Findings</div>
+        <div class="kpi-foot warn">+6 new since yesterday</div>
+      </div>
+    </div>
+    <div class="sec" style="flex:1;">
+      <div class="sec-title">Spacing &amp; radius scale</div>
+      <div style="display:flex;align-items:flex-end;gap:14px;">
+        <div><div style="width:4px;height:4px;background:var(--orange);"></div><div class="muted" style="margin-top:6px;">4</div></div>
+        <div><div style="width:8px;height:8px;background:var(--orange);"></div><div class="muted" style="margin-top:6px;">8</div></div>
+        <div><div style="width:16px;height:16px;background:var(--orange);border-radius:4px;"></div><div class="muted" style="margin-top:6px;">16 / r4</div></div>
+        <div><div style="width:24px;height:24px;background:var(--orange);border-radius:6px;"></div><div class="muted" style="margin-top:6px;">24 / r6</div></div>
+        <div><div style="width:40px;height:40px;background:var(--orange);border-radius:10px;"></div><div class="muted" style="margin-top:6px;">40 / r10</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">Graph semantics — node roles &amp; edge confidence</div>
+    <div style="display:flex;gap:32px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:8px;"><div style="width:14px;height:14px;border-left:4px solid var(--crit);background:#1B1F24;"></div><span>Node · severity shown as left border + text badge</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="width:16px;height:2px;background:var(--crit);"></span><svg width="10" height="10"><polygon points="0,0 10,5 0,10" fill="var(--crit)"/></svg><span>High confidence — solid line</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="width:16px;height:0;border-top:2px dashed var(--ink-faint);"></span><span>Medium confidence — dashed</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="width:16px;height:0;border-top:2px dotted var(--ink-faint);"></span><span>Low / uncertain — dotted</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="width:16px;height:2px;background:var(--unknown);"></span><span>Normal (non-risky) relationship — grey</span></div>
+    </div>
+  </div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1420}}'>
+class Component extends DCLogic {
+  renderVals(){ return {}; }
+}
+</script>
+</body>
+</html>

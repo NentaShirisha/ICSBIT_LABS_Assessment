@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dashboard — GridWatch OT</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="/_blob/4198e528c0367a5df5c76f185bcda38b">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .icon{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;}
+  .icon-sm{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;}
+</style>
+</helmet>
+<div style="width:1440px;background:var(--canvas);font-size:14px;">
+
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<defs>
+<symbol id="i-tri" viewBox="0 0 24 24"><path d="M12 3.5 22 20H2L12 3.5Z" stroke-linejoin="round"/><path d="M12 10v4.5M12 17.2v.1"/></symbol>
+<symbol id="i-route" viewBox="0 0 24 24"><circle cx="5" cy="19" r="2.4"/><circle cx="19" cy="5" r="2.4"/><path d="M7 18 14 8"/><path d="M14 8h4M18 8v4" stroke-linecap="round"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.2M12 16.3v.1"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 20 6.5V12c0 5-3.4 7.8-8 9-4.6-1.2-8-4-8-9V6.5L12 3Z" stroke-linejoin="round"/><path d="m9 12 2.1 2.2L15.5 10"/></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3 21 8l-9 5-9-5 9-5Z" stroke-linejoin="round"/><path d="m3 12 9 5 9-5"/><path d="m3 16 9 5 9-5"/></symbol>
+<symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l2.2 6L13 4l2.3 8H21" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.4-4.4" stroke-linecap="round"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 10a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z" stroke-linejoin="round"/><path d="M10 20a2 2 0 0 0 4 0"/></symbol>
+<symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.6 2.6 0 1 1 3.7 2.4c-.8.4-1.2.9-1.2 1.8" stroke-linecap="round"/><path d="M12 17.3v.1"/></symbol>
+<symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" stroke-linecap="round"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.2M20 12a8 8 0 0 1-14 5.2" stroke-linecap="round"/><path d="M18 3v4h-4M6 21v-4h4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.4 7-11.5A7 7 0 0 0 5 9.5C5 14.6 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.3"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L12 17l-5.6 3.1 1.4-6.3-4.8-4.3 6.4-.6L12 3Z" stroke-linejoin="round"/></symbol>
+<symbol id="i-ext" viewBox="0 0 24 24"><path d="M9 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/><path d="M14 4h6v6M20 4 10 14" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-server" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="1.2"/><rect x="3" y="14" width="18" height="6" rx="1.2"/><path d="M7 7h.01M7 17h.01"/></symbol>
+</defs>
+</svg>
+
+<!-- utility bar -->
+<div class="util-bar">
+  <span class="util-label">CANDIDATE PROTOTYPE</span>
+  <a href="Main.dc.html" class="active">Dashboard</a>
+  <a href="AttackPath.dc.html">Attack Path Map</a>
+  <a href="States.dc.html">States Gallery</a>
+  <a href="Tokens.dc.html">Components &amp; Tokens</a>
+  <a href="Rationale.dc.html">Design Rationale</a>
+</div>
+
+<!-- product chrome -->
+<div class="chrome">
+  <div class="brand"><div class="brand-mark">GW</div>GRIDWATCH</div>
+  <div class="chrome-nav">
+    <span class="on">Dashboard</span><span>Assets</span><span>Findings</span><span>Attack Paths</span><span>Reports</span>
+  </div>
+  <div style="flex-grow:1;"></div>
+  <div class="chrome-search"><svg class="icon-sm"><use href="#i-search"/></svg>Search assets, findings, CVEs, IPs…</div>
+  <div class="chrome-right">
+    <div class="icon-btn dot-badge" aria-label="Notifications"><svg class="icon"><use href="#i-bell"/></svg></div>
+    <div class="icon-btn" aria-label="Help"><svg class="icon"><use href="#i-help"/></svg></div>
+    <div class="avatar" title="J. Alvarez">JA</div>
+  </div>
+</div>
+
+<!-- filter bar -->
+<div class="filter-bar">
+  <button type="button" class="pill"><svg class="icon-sm"><use href="#i-pin"/></svg>All Sites (12)<svg class="icon-sm"><use href="#i-chevron"/></svg></button>
+  <button type="button" class="pill">All Zones<svg class="icon-sm"><use href="#i-chevron"/></svg></button>
+  <div class="chip-group">
+    <sc-for list="{{rangeChips}}" as="c" hint-placeholder-count="4">
+      <button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button>
+    </sc-for>
+  </div>
+  <div class="chip-group" style="background:transparent;border:none;padding:0;gap:8px;">
+    <sc-for list="{{sevChips}}" as="s" hint-placeholder-count="4">
+      <button type="button" class="chip-sev {{s.cls}}" onClick="{{s.pick}}"><span class="sw" style="{{s.style}}"></span>{{s.label}} {{s.count}}</button>
+    </sc-for>
+  </div>
+  <div class="search-mini"><svg class="icon-sm"><use href="#i-search"/></svg>Search this view…</div>
+  <span class="muted">Updated 2 min ago</span>
+  <button type="button" class="icon-btn" style="border:1px solid var(--line);color:var(--ink-soft);" aria-label="Refresh"><svg class="icon-sm"><use href="#i-refresh"/></svg></button>
+</div>
+
+<!-- KPI hero strip -->
+<div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px;padding:22px 40px 0;">
+
+  <button type="button" class="kpi accent-crit clickable" onClick="{{kpiCrit}}" style="text-align:left;">
+    <div class="kpi-top"><svg class="icon" style="color:var(--crit);"><use href="#i-tri"/></svg><svg class="icon-sm" style="{{chevCrit}}"><use href="#i-chevron"/></svg></div>
+    <div class="kpi-num">7</div>
+    <div class="kpi-label">Exposed Critical Assets</div>
+    <div class="kpi-foot bad">+2 this week · reachable now</div>
+  </button>
+
+  <button type="button" class="kpi accent-high clickable" onClick="{{kpiPaths}}" style="text-align:left;">
+    <div class="kpi-top"><svg class="icon" style="color:var(--orange);"><use href="#i-route"/></svg><svg class="icon-sm" style="{{chevPaths}}"><use href="#i-chevron"/></svg></div>
+    <div class="kpi-num">3</div>
+    <div class="kpi-label">Active Attack Paths</div>
+    <div class="kpi-foot warn">1 reaches a crown-jewel asset</div>
+  </button>
+
+  <button type="button" class="kpi accent-high clickable" onClick="{{kpiFindings}}" style="text-align:left;">
+    <div class="kpi-top"><svg class="icon" style="color:var(--orange);"><use href="#i-alert"/></svg><svg class="icon-sm" style="{{chevFindings}}"><use href="#i-chevron"/></svg></div>
+    <div class="kpi-num">24</div>
+    <div class="kpi-label">High-Priority Findings</div>
+    <div class="kpi-foot warn">+6 new since yesterday</div>
+  </button>
+
+  <button type="button" class="kpi accent-neutral clickable" onClick="{{kpiPosture}}" style="text-align:left;">
+    <div class="kpi-top"><svg class="icon" style="color:var(--ink-soft);"><use href="#i-shield"/></svg><svg class="icon-sm" style="{{chevPosture}}"><use href="#i-chevron"/></svg></div>
+    <div class="kpi-num">B–</div>
+    <div class="kpi-label">Overall Security Posture</div>
+    <div class="kpi-foot plain">Stable vs last 30 days</div>
+  </button>
+
+  <button type="button" class="kpi accent-neutral clickable" onClick="{{kpiAssets}}" style="text-align:left;">
+    <div class="kpi-top"><svg class="icon" style="color:var(--ink-soft);"><use href="#i-layers"/></svg><svg class="icon-sm" style="{{chevAssets}}"><use href="#i-chevron"/></svg></div>
+    <div class="kpi-num">1,284</div>
+    <div class="kpi-label">Total Assets Monitored</div>
+    <div class="kpi-foot plain">38 sites · 6 zones</div>
+  </button>
+
+  <button type="button" class="kpi accent-neutral clickable" onClick="{{kpiCoverage}}" style="text-align:left;">
+    <div class="kpi-top"><svg class="icon" style="color:var(--ink-soft);"><use href="#i-activity"/></svg><svg class="icon-sm" style="{{chevCoverage}}"><use href="#i-chevron"/></svg></div>
+    <div class="kpi-num">94%</div>
+    <div class="kpi-label">Monitoring Coverage</div>
+    <div class="kpi-foot warn">3 sensors degraded</div>
+  </button>
+</div>
+
+<!-- drill-down drawers -->
+<div style="padding:0 40px;">
+
+<sc-if value="{{expCrit}}" hint-placeholder-val="{{false}}">
+<div class="card drawer-card" style="margin-top:14px;">
+  <div class="card-pad">
+    <div class="card-head">
+      <div><div class="card-title">Exposed Critical Assets · 7 reachable now</div><div class="card-sub">Assets with a critical finding AND at least one active path from an untrusted zone.</div></div>
+      <button type="button" class="icon-btn" style="color:var(--ink-soft);border:1px solid var(--line);" onClick="{{closeKpi}}" aria-label="Close"><svg class="icon-sm"><use href="#i-close"/></svg></button>
+    </div>
+    <div class="row-line"><div><div style="font-weight:600;">Historian DB</div><div class="muted">Zone 1 · Production — reachable via 2 open attack paths</div></div><div style="display:flex;align-items:center;gap:10px;"><span class="badge badge-crit"><svg class="icon-sm"><use href="#i-tri"/></svg>Critical</span><a href="AttackPath.dc.html" class="card-link">Investigate →</a></div></div>
+    <div class="row-line"><div><div style="font-weight:600;">Engineering Workstation · EWS-14</div><div class="muted">Zone 2 · Utilities — internet-facing RDP, unpatched</div></div><span class="badge badge-crit"><svg class="icon-sm"><use href="#i-tri"/></svg>Critical</span></div>
+    <div class="row-line"><div><div style="font-weight:600;">Safety Instrumented Controller</div><div class="muted">Zone 3 · Safety — reachable only if Historian DB is compromised (indirect)</div></div><span class="badge badge-crit"><svg class="icon-sm"><use href="#i-tri"/></svg>Critical</span></div>
+    <div style="margin-top:8px;"><button type="button" class="card-link">View all 7 exposed assets →</button></div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{expPaths}}" hint-placeholder-val="{{false}}">
+<div class="card drawer-card" style="margin-top:14px;">
+  <div class="card-pad">
+    <div class="card-head">
+      <div><div class="card-title">Active Attack Paths · 3</div><div class="card-sub">Ranked by reachability to a crown-jewel target and step confidence.</div></div>
+      <button type="button" class="icon-btn" style="color:var(--ink-soft);border:1px solid var(--line);" onClick="{{closeKpi}}" aria-label="Close"><svg class="icon-sm"><use href="#i-close"/></svg></button>
+    </div>
+    <div class="row-line"><div><div style="font-weight:600;">EWS-14 → Jump Host → Domain Controller → Historian DB</div><div class="muted">Reaches crown-jewel target · 92% confidence</div></div><div style="display:flex;align-items:center;gap:10px;"><span class="badge badge-crit">Critical</span><a href="AttackPath.dc.html" class="card-link">Open →</a></div></div>
+    <div class="row-line"><div><div style="font-weight:600;">Remote Vendor VPN → HMI-07</div><div class="muted">Single hop · 78% confidence</div></div><span class="badge badge-high">High</span></div>
+    <div class="row-line"><div><div style="font-weight:600;">Guest Wi-Fi → Engineering Switch → PLC Line 3</div><div class="muted">Partial evidence · confidence uncertain</div></div><span class="badge badge-unknown">Medium · Uncertain</span></div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{expFindings}}" hint-placeholder-val="{{false}}">
+<div class="card drawer-card" style="margin-top:14px;">
+  <div class="card-pad">
+    <div class="card-head">
+      <div><div class="card-title">High-Priority Findings · 24</div><div class="card-sub">Unresolved findings rated High or Critical, sorted by age.</div></div>
+      <button type="button" class="icon-btn" style="color:var(--ink-soft);border:1px solid var(--line);" onClick="{{closeKpi}}" aria-label="Close"><svg class="icon-sm"><use href="#i-close"/></svg></button>
+    </div>
+    <div class="row-line"><div><div style="font-weight:600;">Unpatched remote access exposed to internet</div><div class="muted">EWS-14 · Zone 2 · open 2 days</div></div><span class="badge badge-crit">Critical</span></div>
+    <div class="row-line"><div><div style="font-weight:600;">Default vendor credentials in use</div><div class="muted">HMI-07 · Zone 1 · open 5 days</div></div><span class="badge badge-high">High</span></div>
+    <div class="row-line"><div><div style="font-weight:600;">Firmware end-of-life across PLC line</div><div class="muted">12 assets · Zone 3 · open 30 days</div></div><span class="badge badge-high">High</span></div>
+    <div style="margin-top:8px;"><button type="button" class="card-link">Open findings queue →</button></div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{expPosture}}" hint-placeholder-val="{{false}}">
+<div class="card drawer-card" style="margin-top:14px;">
+  <div class="card-pad">
+    <div class="card-head">
+      <div><div class="card-title">Overall Security Posture · B–</div><div class="card-sub">Composite of exposure, patch currency, segmentation and monitoring coverage.</div></div>
+      <button type="button" class="icon-btn" style="color:var(--ink-soft);border:1px solid var(--line);" onClick="{{closeKpi}}" aria-label="Close"><svg class="icon-sm"><use href="#i-close"/></svg></button>
+    </div>
+    <p class="rat-p" style="margin:0;">Declined from <b>B</b> to <b>B–</b> this week after 2 new critical exposures were introduced. Monitoring coverage (94%) and patch currency are holding steady; exposure and segmentation are the components dragging the grade down. No change to safety-zone posture.</p>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{expAssets}}" hint-placeholder-val="{{false}}">
+<div class="card drawer-card" style="margin-top:14px;">
+  <div class="card-pad">
+    <div class="card-head">
+      <div><div class="card-title">Total Assets Monitored · 1,284</div><div class="card-sub">Across 38 sites and 6 zones.</div></div>
+      <button type="button" class="icon-btn" style="color:var(--ink-soft);border:1px solid var(--line);" onClick="{{closeKpi}}" aria-label="Close"><svg class="icon-sm"><use href="#i-close"/></svg></button>
+    </div>
+    <div style="display:flex;gap:28px;">
+      <div><div class="kpi-num" style="font-size:22px;">14</div><div class="muted">New in last 7 days</div></div>
+      <div><div class="kpi-num" style="font-size:22px;">31</div><div class="muted">Unidentified / incomplete</div></div>
+      <div><div class="kpi-num" style="font-size:22px;">9</div><div class="muted">Inactive or offline</div></div>
+    </div>
+    <div style="margin-top:10px;"><button type="button" class="card-link">Open asset inventory →</button></div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{expCoverage}}" hint-placeholder-val="{{false}}">
+<div class="card drawer-card" style="margin-top:14px;">
+  <div class="card-pad">
+    <div class="card-head">
+      <div><div class="card-title">Monitoring Coverage · 94%</div><div class="card-sub">Share of expected telemetry volume received in the last hour.</div></div>
+      <button type="button" class="icon-btn" style="color:var(--ink-soft);border:1px solid var(--line);" onClick="{{closeKpi}}" aria-label="Close"><svg class="icon-sm"><use href="#i-close"/></svg></button>
+    </div>
+    <div class="row-line"><div style="font-weight:600;">Zone 2 · Utilities collector</div><span class="badge badge-med">Degraded · stale 41 min</span></div>
+    <div class="row-line"><div style="font-weight:600;">Zone 4 · Warehouse historian agent</div><span class="badge badge-unknown">No data · offline 6h</span></div>
+    <div class="row-line"><div style="font-weight:600;">DMZ probe</div><span class="badge badge-med">Degraded · stale 12 min</span></div>
+    <div style="margin-top:8px;"><button type="button" class="card-link">View sensor health →</button></div>
+  </div>
+</div>
+</sc-if>
+
+</div>
+
+<!-- main two column -->
+<div style="display:flex;gap:20px;align-items:flex-start;padding:22px 40px 0;">
+  <div style="flex:2;display:flex;flex-direction:column;gap:20px;min-width:0;">
+
+    <!-- Risk & Findings -->
+    <div class="card"><div class="card-pad">
+      <div class="card-head">
+        <div><div class="card-title">Risk &amp; Findings</div><div class="card-sub">187 open findings across all monitored sites</div></div>
+        <button type="button" class="card-link">View all findings →</button>
+      </div>
+      <div class="stackbar">
+        <div style="width:3.7%;background:var(--crit);"></div>
+        <div style="width:9.6%;background:var(--orange);"></div>
+        <div style="width:24.6%;background:var(--med);"></div>
+        <div style="width:62.1%;background:var(--low);"></div>
+      </div>
+      <div class="legend-row">
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--crit);"></span>Critical · 7</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--orange);"></span>High · 18</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--med);"></span>Medium · 46</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--low);"></span>Low · 116</div>
+      </div>
+
+      <div style="font-size:12px;font-weight:700;color:var(--ink-soft);margin:16px 0 4px;text-transform:uppercase;letter-spacing:.05em;">Top unresolved risks</div>
+      <div class="row-line"><div><div style="font-weight:600;">Unpatched remote access exposed to internet</div><div class="muted">EWS-14 · Zone 2 · open 2 days</div></div><span class="badge badge-crit">Critical</span></div>
+      <div class="row-line"><div><div style="font-weight:600;">Default vendor credentials on HMI</div><div class="muted">HMI-07 · Zone 1 · open 5 days</div></div><span class="badge badge-high">High</span></div>
+      <div class="row-line"><div><div style="font-weight:600;">Firmware end-of-life across PLC line</div><div class="muted">12 assets · Zone 3 · open 30 days</div></div><span class="badge badge-high">High</span></div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid var(--line-soft);">
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">7-day risk trend</div>
+          <svg width="220" height="46" viewBox="0 0 220 46">
+            <polyline points="0,30 30,26 60,32 90,18 120,22 150,10 180,14 210,6" fill="none" stroke="var(--orange)" stroke-width="2"/>
+            <polyline points="0,38 30,36 60,34 90,35 120,30 150,31 180,26 210,24" fill="none" stroke="var(--good)" stroke-width="2"/>
+          </svg>
+          <div class="muted" style="margin-top:4px;">New: 9 <span style="color:var(--orange);">■</span> &nbsp; Resolved: 5 <span style="color:var(--good);">■</span> &nbsp; net +4</div>
+        </div>
+      </div>
+    </div></div>
+
+    <!-- Attack path preview -->
+    <div class="card"><div class="card-pad">
+      <div class="card-head">
+        <div><div class="card-title">Attack Path Exposure</div><div class="card-sub">Reachability from exposed entry points to high-value targets</div></div>
+        <a href="AttackPath.dc.html" class="card-link">Open full map <svg class="icon-sm"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:6px 0 14px;">
+        <span class="ap-tag" style="background:#fff;"><svg class="icon-sm"><use href="#i-server"/></svg>EWS-14</span>
+        <svg class="icon-sm" style="color:var(--ink-faint);"><use href="#i-arrow"/></svg>
+        <span class="ap-tag" style="background:#fff;">Jump Host</span>
+        <svg class="icon-sm" style="color:var(--ink-faint);"><use href="#i-arrow"/></svg>
+        <span class="ap-tag" style="background:#fff;">Domain Controller</span>
+        <svg class="icon-sm" style="color:var(--ink-faint);"><use href="#i-arrow"/></svg>
+        <span class="ap-tag" style="background:var(--crit-tint);border-color:var(--crit-line);color:var(--crit);"><svg class="icon-sm"><use href="#i-star"/></svg>Historian DB</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <span class="badge badge-crit">Critical</span><span class="muted">92% confidence · updated 14 min ago</span>
+      </div>
+      <p class="rat-p" style="margin:0 0 14px;">Engineering workstation <b>EWS-14</b> (unpatched, internet-facing RDP) can reach <b>Historian DB</b> via two pivot hops, crossing from Zone 2 into Zone 1. Historian DB stores production recipes and is reachable without additional credentials once the jump host is compromised.</p>
+      <div style="display:flex;gap:28px;padding-top:12px;border-top:1px solid var(--line-soft);">
+        <div><div class="kpi-num" style="font-size:20px;">3</div><div class="muted">active paths</div></div>
+        <div><div class="kpi-num" style="font-size:20px;">1</div><div class="muted">reaches a crown jewel</div></div>
+        <div><div class="kpi-num" style="font-size:20px;">5</div><div class="muted">cross-zone hops</div></div>
+      </div>
+    </div></div>
+
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;gap:20px;min-width:0;">
+
+    <!-- Platform health -->
+    <div class="card"><div class="card-pad">
+      <div class="card-head"><div class="card-title">Platform &amp; Sensor Health</div></div>
+      <div style="display:flex;gap:8px;align-items:flex-start;background:var(--med-tint);border:1px solid var(--med-line);border-radius:8px;padding:10px 12px;margin-bottom:12px;">
+        <svg class="icon-sm" style="color:var(--med);margin-top:2px;"><use href="#i-alert"/></svg>
+        <div style="font-size:12.5px;color:var(--med);"><b>Degraded</b> — 3 of 42 sensors reporting stale data (&gt;30 min). Findings from affected zones may be incomplete.</div>
+      </div>
+      <div class="row-line"><div style="display:flex;align-items:center;gap:8px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--good);"></span>Zone 1 · Production</div><span class="muted mono">2 min ago</span></div>
+      <div class="row-line"><div style="display:flex;align-items:center;gap:8px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--med);"></span>Zone 2 · Utilities</div><span class="badge badge-med">Degraded</span></div>
+      <div class="row-line"><div style="display:flex;align-items:center;gap:8px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--good);"></span>Zone 3 · Safety</div><span class="muted mono">1 min ago</span></div>
+      <div class="row-line"><div style="display:flex;align-items:center;gap:8px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--unknown);"></span>Zone 4 · Warehouse</div><span class="badge badge-unknown">No data · 6h</span></div>
+      <div class="row-line"><div style="display:flex;align-items:center;gap:8px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--med);"></span>DMZ probe</div><span class="badge badge-med">Degraded</span></div>
+      <div style="margin-top:8px;"><button type="button" class="card-link">View sensor health →</button></div>
+    </div></div>
+
+    <!-- Timeline -->
+    <div class="card"><div class="card-pad">
+      <div class="card-head"><div class="card-title">Recent Change Timeline</div></div>
+      <div class="timeline-item"><span class="timeline-dot" style="background:var(--orange);"></span><div><div class="timeline-time">12 min ago</div><div class="timeline-text">New asset discovered — <b>PLC-204</b> (Zone 3, unclassified)</div></div></div>
+      <div class="timeline-item"><span class="timeline-dot" style="background:var(--crit);"></span><div><div class="timeline-time">38 min ago</div><div class="timeline-text">Risk elevated — <b>Historian DB</b> now Critical (was High)</div></div></div>
+      <div class="timeline-item"><span class="timeline-dot" style="background:var(--low);"></span><div><div class="timeline-time">1 hour ago</div><div class="timeline-text">Communication change — new flow <b>HMI-12 → Internet</b> (unexpected)</div></div></div>
+      <div class="timeline-item"><span class="timeline-dot" style="background:var(--med);"></span><div><div class="timeline-time">2 hours ago</div><div class="timeline-text">Sensor degraded — Zone 2 collector reporting stale data</div></div></div>
+      <div class="timeline-item"><span class="timeline-dot" style="background:var(--good);"></span><div><div class="timeline-time">3 hours ago</div><div class="timeline-text">Finding acknowledged — RDP exposure triaged by J. Alvarez</div></div></div>
+      <div style="margin-top:6px;"><button type="button" class="card-link">View full activity log →</button></div>
+    </div></div>
+
+  </div>
+</div>
+
+<!-- bottom row -->
+<div style="display:flex;gap:20px;padding:22px 40px 40px;">
+  <div class="card" style="flex:1;"><div class="card-pad">
+    <div class="card-head">
+      <div><div class="card-title">Asset Visibility</div><div class="card-sub">1,284 assets across 38 sites</div></div>
+      <button type="button" class="card-link">View inventory →</button>
+    </div>
+    <div style="display:flex;gap:24px;">
+      <div style="flex:1.3;">
+        <div class="row-line" style="display:block;padding:6px 0;"><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px;"><span>PLC</span><span class="muted mono">412</span></div><div style="height:6px;background:var(--line-soft);border-radius:3px;"><div style="width:88%;height:100%;background:var(--low);border-radius:3px;"></div></div></div>
+        <div class="row-line" style="display:block;padding:6px 0;border:none;"><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px;"><span>IoT / Sensor</span><span class="muted mono">302</span></div><div style="height:6px;background:var(--line-soft);border-radius:3px;"><div style="width:65%;height:100%;background:var(--low);border-radius:3px;"></div></div></div>
+        <div class="row-line" style="display:block;padding:6px 0;border:none;"><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px;"><span>Network Infrastructure</span><span class="muted mono">140</span></div><div style="height:6px;background:var(--line-soft);border-radius:3px;"><div style="width:30%;height:100%;background:var(--low);border-radius:3px;"></div></div></div>
+        <div class="row-line" style="display:block;padding:6px 0;border:none;"><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px;"><span>Unclassified</span><span class="muted mono">276</span></div><div style="height:6px;background:var(--line-soft);border-radius:3px;"><div style="width:59%;height:100%;background:var(--unknown);"></div></div></div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
+        <div class="zone-box"><div class="muted">New in last 7 days</div><div style="font-size:20px;font-weight:700;font-family:'IBM Plex Mono',monospace;">14</div></div>
+        <div class="zone-box"><div class="muted">Unidentified / incomplete</div><div style="font-size:20px;font-weight:700;font-family:'IBM Plex Mono',monospace;">31</div></div>
+        <div class="zone-box"><div class="muted">Inactive / offline</div><div style="font-size:20px;font-weight:700;font-family:'IBM Plex Mono',monospace;">9</div></div>
+      </div>
+      <div style="flex:1;">
+        <div style="font-size:11px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">Top protocols</div>
+        <div style="font-size:12.5px;display:flex;justify-content:space-between;margin-bottom:6px;"><span>Modbus TCP</span><span class="mono muted">38%</span></div>
+        <div style="font-size:12.5px;display:flex;justify-content:space-between;margin-bottom:6px;"><span>OPC-UA</span><span class="mono muted">24%</span></div>
+        <div style="font-size:12.5px;display:flex;justify-content:space-between;margin-bottom:6px;"><span>EtherNet/IP</span><span class="mono muted">19%</span></div>
+        <div style="font-size:12.5px;display:flex;justify-content:space-between;"><span>Other</span><span class="mono muted">19%</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="card" style="flex:1;"><div class="card-pad">
+    <div class="card-head">
+      <div><div class="card-title">Network &amp; Topology Insight</div><div class="card-sub">Zone-level connectivity and communication hotspots</div></div>
+      <button type="button" class="card-link">Open topology view →</button>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <div class="zone-box" style="flex:1;">IT<div class="muted mono" style="margin-top:4px;">210 assets</div></div>
+      <div class="zone-box" style="flex:1;">DMZ<div class="muted mono" style="margin-top:4px;">18 assets</div></div>
+      <div class="zone-box hot" style="flex:1;">Zone 2 · Utilities<div class="muted mono" style="margin-top:4px;color:var(--orange-dark);">→ Zone 1 hotspot</div></div>
+      <div class="zone-box" style="flex:1;">Zone 1 · Production<div class="muted mono" style="margin-top:4px;">486 assets</div></div>
+      <div class="zone-box" style="flex:1;">Zone 3 · Safety<div class="muted mono" style="margin-top:4px;">96 assets</div></div>
+    </div>
+    <p class="muted" style="margin:12px 0 0;line-height:1.6;">Traffic from <b style="color:var(--ink);">Zone 2 → Zone 1</b> is running at <b style="color:var(--orange-dark);">3.2× baseline</b> over the last 24 hours — an unusual concentration worth reviewing alongside the active attack path above.</p>
+  </div></div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2260}}'>
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    this.state = { timeRange: "7D", sev: { crit:true, high:true, med:true, low:true }, expandedKpi: null };
+  }
+  toggleKpi(key){
+    this.setState({ expandedKpi: this.state.expandedKpi === key ? null : key });
+  }
+  renderVals(){
+    const s = this.state;
+    const ranges = ["24H","7D","30D","Custom"];
+    const rangeChips = ranges.map((r) => ({
+      label: r,
+      cls: s.timeRange === r ? "active" : "",
+      pick: () => this.setState({ timeRange: r })
+    }));
+    const sevDefs = [
+      { key:"crit", label:"Critical", count:7, color:"var(--crit)" },
+      { key:"high", label:"High", count:18, color:"var(--orange)" },
+      { key:"med", label:"Medium", count:46, color:"var(--med)" },
+      { key:"low", label:"Low", count:116, color:"var(--low)" }
+    ];
+    const sevChips = sevDefs.map((d) => ({
+      label: d.label,
+      count: d.count,
+      cls: s.sev[d.key] ? "" : "off",
+      style: "background:" + d.color + ";",
+      pick: () => this.setState({ sev: { ...s.sev, [d.key]: !s.sev[d.key] } })
+    }));
+    const chev = (key) => "transform:" + (s.expandedKpi === key ? "rotate(180deg)" : "none") + ";color:var(--ink-faint);transition:transform .15s;";
+    return {
+      rangeChips, sevChips,
+      kpiCrit: () => this.toggleKpi("crit"),
+      kpiPaths: () => this.toggleKpi("paths"),
+      kpiFindings: () => this.toggleKpi("findings"),
+      kpiPosture: () => this.toggleKpi("posture"),
+      kpiAssets: () => this.toggleKpi("assets"),
+      kpiCoverage: () => this.toggleKpi("coverage"),
+      closeKpi: () => this.setState({ expandedKpi: null }),
+      chevCrit: chev("crit"), chevPaths: chev("paths"), chevFindings: chev("findings"),
+      chevPosture: chev("posture"), chevAssets: chev("assets"), chevCoverage: chev("coverage"),
+      expCrit: s.expandedKpi === "crit",
+      expPaths: s.expandedKpi === "paths",
+      expFindings: s.expandedKpi === "findings",
+      expPosture: s.expandedKpi === "posture",
+      expAssets: s.expandedKpi === "assets",
+      expCoverage: s.expandedKpi === "coverage"
+    };
+  }
+}
+</script>
+</body>
+</html>

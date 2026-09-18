@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>States Gallery — GridWatch OT</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="/_blob/4198e528c0367a5df5c76f185bcda38b">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .icon{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;}
+  .icon-sm{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;}
+  .state-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 22px;}
+  .state-tag{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:4px;}
+  .state-title{font-size:15px;font-weight:700;margin-bottom:4px;}
+  .state-desc{font-size:12.5px;color:var(--ink-soft);margin-bottom:14px;line-height:1.5;}
+  .toast{display:flex;align-items:center;gap:9px;background:#1B1F24;color:#EDEFF1;border-radius:9px;padding:10px 14px;font-size:12.8px;margin-bottom:8px;}
+</style>
+</helmet>
+<div style="width:1440px;background:var(--canvas);font-size:14px;padding-bottom:48px;">
+
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<defs>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m5 13 4.5 4.5L20 7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.2M12 16.3v.1"/></symbol>
+<symbol id="i-q" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-dasharray="3 2.6"/><path d="M9.7 9.5a2.4 2.4 0 1 1 3.4 2.2c-.7.4-1.1.8-1.1 1.6" stroke-linecap="round"/><path d="M12 17v.1"/></symbol>
+<symbol id="i-empty" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 9h16M9 13h6" stroke-linecap="round"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.2M12 7.7v.1"/></symbol>
+<symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4Z" stroke-linejoin="round"/><path d="m16 9 4 6M20 9l-4 6" stroke-linecap="round"/></symbol>
+</defs>
+</svg>
+
+<div class="util-bar">
+  <span class="util-label">CANDIDATE PROTOTYPE</span>
+  <a href="Main.dc.html">Dashboard</a>
+  <a href="AttackPath.dc.html">Attack Path Map</a>
+  <a href="States.dc.html" class="active">States Gallery</a>
+  <a href="Tokens.dc.html">Components &amp; Tokens</a>
+  <a href="Rationale.dc.html">Design Rationale</a>
+</div>
+
+<div class="chrome">
+  <div class="brand"><div class="brand-mark">GW</div>GRIDWATCH</div>
+  <div class="chrome-nav"><span>Dashboard</span><span>Assets</span><span>Findings</span><span>Attack Paths</span><span>Reports</span></div>
+</div>
+
+<div style="padding:28px 40px 8px;max-width:1100px;">
+  <h1 style="font-size:22px;margin:0 0 6px;">Functional states</h1>
+  <p class="rat-p" style="margin:0;">The states required by the brief (§5), shown as they would render inside the dashboard and attack-path surfaces. Severity, confidence and data-quality are always paired with an icon and text label — never colour alone — and “no issue” is drawn distinctly from “no data.”</p>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;padding:16px 40px;">
+
+  <div class="state-card">
+    <div class="state-tag" style="color:var(--good);">Normal</div>
+    <div class="state-title">Healthy, currently monitored</div>
+    <div class="state-desc">Default state when data is fresh and no urgent condition exists.</div>
+    <div style="display:flex;align-items:center;gap:10px;background:var(--good-tint);border:1px solid var(--good-line);border-radius:9px;padding:12px 14px;">
+      <svg class="icon" style="color:var(--good);"><use href="#i-check"/></svg>
+      <div><div style="font-weight:600;font-size:13px;color:var(--good);">All zones reporting normally</div><div class="muted">0 critical findings · last sync 1 min ago</div></div>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-tag" style="color:var(--crit);">High-risk</div>
+    <div class="state-title">Needs attention now</div>
+    <div class="state-desc">Critical finding or an active attack path reaching a crown-jewel asset.</div>
+    <div style="display:flex;align-items:center;gap:10px;background:var(--crit-tint);border:1px solid var(--crit-line);border-radius:9px;padding:12px 14px;">
+      <svg class="icon" style="color:var(--crit);"><use href="#i-alert"/></svg>
+      <div style="flex:1;"><div style="font-weight:600;font-size:13px;color:var(--crit);">Active path reaches Historian DB</div><div class="muted">3 hops · 92% confidence</div></div>
+      <button type="button" class="btn btn-primary btn-sm">Investigate</button>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-tag" style="color:var(--med);">Degraded data</div>
+    <div class="state-title">Visibility is impaired</div>
+    <div class="state-desc">Sensor or collection issues mean conclusions from this scope may be incomplete — surfaced, not hidden.</div>
+    <div class="hatch" style="border:1px solid var(--med-line);border-radius:9px;padding:12px 14px;display:flex;gap:10px;align-items:center;">
+      <svg class="icon" style="color:var(--med);"><use href="#i-alert"/></svg>
+      <div><div style="font-weight:600;font-size:13px;color:var(--med);">Zone 2 collector degraded</div><div class="muted">Data up to 41 min stale — findings from this zone may be incomplete</div></div>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-tag" style="color:var(--unknown);">Unknown / uncertain</div>
+    <div class="state-title">Confidence shown honestly</div>
+    <div class="state-desc">Low-confidence relationships use a dashed outline and a “?” marker — never rendered with the same certainty as verified ones.</div>
+    <div style="display:flex;gap:10px;">
+      <div style="flex:1;border:1.5px dashed var(--unknown-line);border-radius:9px;padding:10px 12px;">
+        <div style="display:flex;align-items:center;gap:6px;"><svg class="icon-sm" style="color:var(--unknown);"><use href="#i-q"/></svg><span class="badge badge-unknown">45% · Low confidence</span></div>
+        <div class="muted" style="margin-top:6px;">Guest Wi-Fi → Engineering Switch — partial evidence</div>
+      </div>
+      <div style="flex:1;border:1px solid var(--good-line);border-radius:9px;padding:10px 12px;background:var(--good-tint);">
+        <div style="display:flex;align-items:center;gap:6px;"><svg class="icon-sm" style="color:var(--good);"><use href="#i-check"/></svg><span class="badge badge-crit">95% · High confidence</span></div>
+        <div class="muted" style="margin-top:6px;">Domain Controller → Historian DB — confirmed</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-tag">Empty</div>
+    <div class="state-title">“No issue” vs “no data”</div>
+    <div class="state-desc">A verified-clean result is styled distinctly from an absence of monitoring — both use icon + text, never colour alone.</div>
+    <div style="display:flex;gap:10px;">
+      <div style="flex:1;border:1px solid var(--good-line);background:var(--good-tint);border-radius:9px;padding:12px;text-align:center;">
+        <svg class="icon" style="color:var(--good);margin:0 auto 6px;"><use href="#i-check"/></svg>
+        <div style="font-weight:600;font-size:12.5px;color:var(--good);">0 critical findings</div>
+        <div class="muted">Verified healthy</div>
+      </div>
+      <div class="hatch" style="flex:1;border:1px solid var(--unknown-line);border-radius:9px;padding:12px;text-align:center;">
+        <svg class="icon" style="color:var(--unknown);margin:0 auto 6px;"><use href="#i-mute"/></svg>
+        <div style="font-weight:600;font-size:12.5px;color:var(--unknown);">No monitoring data</div>
+        <div class="muted">Zone 4 sensor offline 6h</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-tag">Large data volume</div>
+    <div class="state-title">Thousands of assets, still navigable</div>
+    <div class="state-desc">Low-relevance nodes collapse into clusters by default; the analyst expands only what matters.</div>
+    <div style="background:#101317;border-radius:9px;padding:14px;display:flex;align-items:center;gap:14px;">
+      <svg width="120" height="70" viewBox="0 0 120 70"><circle cx="14" cy="35" r="4" fill="#F97316"/><circle cx="46" cy="35" r="4" fill="#F97316"/><line x1="14" y1="35" x2="46" y2="35" stroke="#F97316" stroke-width="1.6"/><line x1="46" y1="35" x2="80" y2="35" stroke="#454B53" stroke-width="1"/><circle cx="80" cy="35" r="10" fill="none" stroke="#6B7280" stroke-width="1.4" stroke-dasharray="2 2"/><text x="80" y="39" fill="#C6CACF" font-size="9" text-anchor="middle" font-family="IBM Plex Mono, monospace">+12</text></svg>
+      <div style="color:#D6D9DD;font-size:12.5px;">1,842 total assets<br/><span style="color:#8A9099;">6 expanded on the active path · 340 collapsed into 12 clusters</span></div>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-tag">Partial data</div>
+    <div class="state-title">Missing fields are labelled, not blank</div>
+    <div class="state-desc">A gap in evidence is explicit so an analyst never mistakes “missing” for “zero.”</div>
+    <div class="row-line"><span class="muted">Vendor</span><span style="font-weight:600;">Siemens</span></div>
+    <div class="row-line"><span class="muted">Firmware version</span><span style="font-style:italic;color:var(--ink-faint);border-bottom:1px dashed var(--unknown-line);">Not available — sensor coverage incomplete</span></div>
+    <div class="row-line"><span class="muted">Last communication</span><span style="font-weight:600;">14 min ago</span></div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-tag">Action feedback</div>
+    <div class="state-title">Every action confirms itself</div>
+    <div class="state-desc">Acknowledge, assign and suppress all produce an explicit, timestamped confirmation.</div>
+    <div class="toast"><svg class="icon-sm" style="color:var(--good);"><use href="#i-check"/></svg>Finding acknowledged by J. Alvarez</div>
+    <div class="toast"><svg class="icon-sm" style="color:var(--orange);"><use href="#i-info"/></svg>Assigned to SOC Team — investigation opened</div>
+    <div class="toast" style="margin-bottom:0;"><svg class="icon-sm" style="color:#9AA0A8;"><use href="#i-mute"/></svg>Suppressed for 7 days — reason logged</div>
+  </div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1220}}'>
+class Component extends DCLogic {
+  renderVals(){ return {}; }
+}
+</script>
+</body>
+</html>

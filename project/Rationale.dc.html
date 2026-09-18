@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Design Rationale — GridWatch OT</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="/_blob/4198e528c0367a5df5c76f185bcda38b">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</helmet>
+<div style="width:1200px;background:var(--canvas);font-size:14px;padding-bottom:40px;">
+
+<div class="util-bar">
+  <span class="util-label">CANDIDATE PROTOTYPE</span>
+  <a href="Main.dc.html">Dashboard</a>
+  <a href="AttackPath.dc.html">Attack Path Map</a>
+  <a href="States.dc.html">States Gallery</a>
+  <a href="Tokens.dc.html">Components &amp; Tokens</a>
+  <a href="Rationale.dc.html" class="active">Design Rationale</a>
+</div>
+<div class="chrome">
+  <div class="brand"><div class="brand-mark">GW</div>GRIDWATCH</div>
+  <div class="chrome-nav"><span>Dashboard</span><span>Assets</span><span>Findings</span><span>Attack Paths</span><span>Reports</span></div>
+</div>
+
+<div style="max-width:820px;margin:0 auto;padding:36px 40px 20px;">
+
+  <h1 style="font-size:26px;margin:0 0 6px;">Design Rationale</h1>
+  <p class="muted" style="margin:0 0 30px;">Frontend + UX Design Challenge — Industrial Cybersecurity Platform</p>
+
+  <div class="rat-h">1. What I prioritised, and why</div>
+  <p class="rat-p">The brief's own 5–10 second test — healthy? urgent? changed? deserves attention? exposed? is there a path? — became the literal contents of the hero strip. Everything that answers one of those six questions sits above the fold as a KPI; everything that explains or supports an answer (severity breakdown, sensor health, topology, asset mix) is one scroll down; everything that is investigation, not orientation, lives on the Attack Path Map. I deliberately made two KPIs — <b>Exposed Critical Assets</b> and <b>Active Attack Paths</b> — visually heavier (red/orange top accent) than the neutral ones (Total Assets, Posture, Coverage), because the brief asks for prioritisation, not parity: a CISO's eye should land on "what's exposed right now" before "how many assets exist."</p>
+
+  <div class="rat-h">2. Serving leadership and analyst workflows from one screen</div>
+  <p class="rat-p">Rather than building two dashboards, I built one dashboard with two depths. The KPI strip and posture language (grade, trend, exposure counts) is what a CISO reads and stops. Every KPI is also a real disclosure control — clicking it expands a drawer with the specific assets/findings/paths behind the number, which is where a SOC or OT analyst actually starts triage without leaving the page. The Attack Path preview card does the same job for attack paths specifically: a plain-language sentence for leadership ("EWS-14 can reach Historian DB"), a confidence badge and hop count for an analyst, and a direct link into the full investigation workspace. Site/plant operators are served by the same posture language plus the Recent Change Timeline, which states impact in plain terms ("new flow HMI-12 → Internet") rather than protocol jargon.</p>
+
+  <div class="rat-h">3. Preventing attack-path visual overload</div>
+  <p class="rat-p">Three deliberate mechanisms, visible in the prototype:</p>
+  <ul class="rat-list">
+    <li><b>One path is emphasised by default.</b> The ranked path list in the sidebar always has an active selection (the highest-severity path); everything not on it renders at ~20% opacity instead of disappearing, so the analyst keeps peripheral awareness without visual competition. "All paths" mode is one click away for comparison.</li>
+    <li><b>Collapsed blast radius, not a full graph dump.</b> 34 additional reachable assets are represented as a single cluster node until "Show blast radius" is switched on — the brief's "hundreds of nodes" problem is solved by not drawing them until asked.</li>
+    <li><b>No text on the canvas by default.</b> Edge protocol/relationship detail lives in the investigation panel on click, not as permanent labels crossing the graph — the canvas stays legible; the meaning is one click away, not hidden behind hover-only (the legend for shapes/lines is always visible in the sidebar, satisfying the no-hover-only requirement).</li>
+  </ul>
+
+  <div class="rat-h">4. Handling uncertainty and incomplete data</div>
+  <p class="rat-p">Confidence and data quality are treated as first-class, not an afterthought: low-confidence edges render dotted rather than solid, medium dashed, and the investigation panel always states a percentage plus a plain-language qualifier ("Low confidence — partial evidence") rather than implying certainty. The States Gallery documents the two distinctions the brief calls out explicitly — <b>"no issue" vs "insufficient data"</b> (green verified-healthy tile vs grey hatched no-data tile with an offline duration) and <b>partial data</b> (a missing field reads "Not available — sensor coverage incomplete" in muted italic, never left blank or shown as zero, which would misread as "confirmed absent").</p>
+
+  <div class="rat-h">5. Scaling to large environments</div>
+  <p class="rat-p">The dashboard's KPI-and-drilldown pattern doesn't change shape as asset count grows — it's already showing aggregates, not a per-asset list. The Attack Path Map is the surface that actually has to scale, and it does so through progressive disclosure rather than layout change: cluster collapse for low-relevance nodes, an always-available severity/confidence filter pair that fades out non-matching elements instead of hard-hiding them (so the analyst never loses spatial memory of where something was), zoom/fit controls, and a mini-map for orientation once the graph grows beyond one screen. The same node-card and edge-styling system works whether the graph holds 9 nodes (as drawn) or 900 — only the clustering threshold changes.</p>
+
+  <div class="rat-h">6. Assumptions made</div>
+  <ul class="rat-list">
+    <li>All entity names, counts, asset names, CVEs and timestamps are illustrative — the brief explicitly excludes real detection logic and internal architecture.</li>
+    <li>"GridWatch" is a placeholder product name invented for this exercise, not a proposal.</li>
+    <li>Desktop-first at 1440px, per the brief's explicit allowance; mobile/tablet were out of scope for the timebox.</li>
+    <li>Filter chips (severity, confidence, time range) are wired to real component state and visibly affect the attack-path canvas's opacity model; on the dashboard they toggle visual state but are not wired to live data, since no dataset was provided — the intent is to demonstrate the interaction pattern, not simulate a backend.</li>
+    <li>The mini-map and "search within graph" are shown as real, always-visible affordances to demonstrate the intended pattern; given the timebox they are not functionally wired (no live viewport sync, no text matching) — this is the area I'd build out first with more time.</li>
+    <li>I assumed a hybrid visual system — dark chrome and dark investigation canvas for the graph, light neutral surface for dense dashboard content — reads as more "enterprise security" and reduces eye strain during long graph investigations, versus an all-light or all-dark product.</li>
+  </ul>
+
+  <div class="rat-h">7. Time spent &amp; what I'd extend next</div>
+  <p class="rat-p">This was built as a single focused pass rather than many loosely-connected screens, per the brief's stated preference for judgement over pixel volume. Given more time, in priority order, I would: (1) wire the mini-map to a real viewport + drag-to-pan on the canvas; (2) make graph search actually filter/highlight matching nodes; (3) add a compact triage/notification pattern (the optional bonus) tying the timeline feed to the same acknowledge/assign/suppress actions shown in the States Gallery; (4) add a responsive breakpoint for a 1280px laptop; and (5) formal contrast auditing pass against WCAG 2.2 AA across the severity-tinted surfaces (the current palette was chosen for text-on-tint contrast, but I'd run it through a checker rather than by eye).</p>
+
+  <div style="margin-top:30px;padding-top:20px;border-top:1px solid var(--line);">
+    <div class="rat-h" style="font-size:15px;">Accessibility &amp; standards notes</div>
+    <ul class="rat-list">
+      <li>Every status/severity/confidence indicator pairs a colour with an icon and/or text label (badges, dash patterns, "Degraded"/"No data" copy) — never colour alone.</li>
+      <li>All actionable elements are real <span class="mono">&lt;button&gt;</span>/<span class="mono">&lt;a&gt;</span> elements, not styled <span class="mono">&lt;div&gt;</span>s, so they receive native focus and keyboard activation.</li>
+      <li>Body text runs at 14px minimum with a 4.5:1+ contrast target against its surface; severity tints were chosen light enough that their paired dark text clears that ratio.</li>
+      <li>The legend for the attack-path graph is permanently visible in the sidebar, not hover-only, per the brief's explicit requirement.</li>
+    </ul>
+  </div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1200,"height":1560}}'>
+class Component extends DCLogic {
+  renderVals(){ return {}; }
+}
+</script>
+</body>
+</html>

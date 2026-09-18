@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Attack Path Map — GridWatch OT</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="/_blob/4198e528c0367a5df5c76f185bcda38b">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .icon{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;}
+  .icon-sm{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;}
+  .ap-node-card{position:absolute;transform:translate(-50%,-50%);width:172px;background:#1B1F24;border:1px solid #2B2F35;border-radius:10px;padding:9px 11px;text-align:left;transition:opacity .15s,border-color .15s,box-shadow .15s;}
+  .ap-node-card:hover{border-color:#454B53;}
+  .ap-minimap{position:absolute;right:14px;bottom:14px;width:150px;height:96px;background:rgba(21,24,28,.9);border:1px solid var(--chrome-line);border-radius:8px;}
+  .ap-input{background:#1C2024;border:1px solid var(--chrome-line);border-radius:8px;color:#D6D9DD;font-size:12.5px;padding:7px 10px;}
+  .ap-input::placeholder{color:#6E747C;}
+</style>
+</helmet>
+<div style="width:1440px;background:var(--canvas);font-size:14px;">
+
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<defs>
+<marker id="mk-crit" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="#D92D20"/></marker>
+<marker id="mk-high" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="#F97316"/></marker>
+<marker id="mk-med" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="#B45309"/></marker>
+<marker id="mk-gray" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="#6B7280"/></marker>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.4-4.4" stroke-linecap="round"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 10a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z" stroke-linejoin="round"/><path d="M10 20a2 2 0 0 0 4 0"/></symbol>
+<symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.6 2.6 0 1 1 3.7 2.4c-.8.4-1.2.9-1.2 1.8" stroke-linecap="round"/><path d="M12 17.3v.1"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" stroke-linecap="round"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></symbol>
+<symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" stroke-linecap="round"/></symbol>
+<symbol id="i-fit" viewBox="0 0 24 24"><path d="M9 4H5a1 1 0 0 0-1 1v4M15 4h4a1 1 0 0 1 1 1v4M9 20H5a1 1 0 0 1-1-1v-4M15 20h4a1 1 0 0 0 1-1v-4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L12 17l-5.6 3.1 1.4-6.3-4.8-4.3 6.4-.6L12 3Z" stroke-linejoin="round"/></symbol>
+</defs>
+</svg>
+
+<div class="util-bar">
+  <span class="util-label">CANDIDATE PROTOTYPE</span>
+  <a href="Main.dc.html">Dashboard</a>
+  <a href="AttackPath.dc.html" class="active">Attack Path Map</a>
+  <a href="States.dc.html">States Gallery</a>
+  <a href="Tokens.dc.html">Components &amp; Tokens</a>
+  <a href="Rationale.dc.html">Design Rationale</a>
+</div>
+
+<div class="chrome">
+  <div class="brand"><div class="brand-mark">GW</div>GRIDWATCH</div>
+  <div class="chrome-nav"><span>Dashboard</span><span>Assets</span><span>Findings</span><span class="on">Attack Paths</span><span>Reports</span></div>
+  <div style="flex-grow:1;"></div>
+  <div class="chrome-search"><svg class="icon-sm"><use href="#i-search"/></svg>Search assets, findings, CVEs, IPs…</div>
+  <div class="chrome-right">
+    <div class="icon-btn dot-badge" aria-label="Notifications"><svg class="icon"><use href="#i-bell"/></svg></div>
+    <div class="icon-btn" aria-label="Help"><svg class="icon"><use href="#i-help"/></svg></div>
+    <div class="avatar" title="J. Alvarez">JA</div>
+  </div>
+</div>
+
+<!-- workspace toolbar -->
+<div class="ap-toolbar" style="height:50px;display:flex;align-items:center;gap:14px;padding:0 20px;color:#D6D9DD;">
+  <div style="font-weight:700;font-size:13.5px;color:#fff;white-space:nowrap;">Attack Path Investigation</div>
+  <div class="ap-input" style="display:flex;align-items:center;gap:8px;width:230px;"><svg class="icon-sm" style="color:#6E747C;"><use href="#i-search"/></svg><span style="color:#6E747C;">Search within graph…</span></div>
+
+  <div style="width:1px;height:24px;background:var(--chrome-line);"></div>
+
+  <div class="chip-group" style="background:#1C2024;border-color:var(--chrome-line);">
+    <button type="button" class="chip {{singleCls}}" style="color:#D6D9DD;" onClick="{{setSingle}}">Single path</button>
+    <button type="button" class="chip {{allCls}}" style="color:#D6D9DD;" onClick="{{setAll}}">All paths</button>
+  </div>
+
+  <button type="button" class="ap-fchip {{blastCls}}" onClick="{{toggleBlast}}">Show blast radius</button>
+
+  <div style="flex-grow:1;"></div>
+
+  <div style="display:flex;align-items:center;gap:4px;">
+    <button type="button" class="ap-tbtn" onClick="{{zoomOut}}" aria-label="Zoom out"><svg class="icon-sm"><use href="#i-minus"/></svg></button>
+    <span class="mono" style="font-size:12px;width:42px;text-align:center;color:#C6CACF;">{{zoomPct}}</span>
+    <button type="button" class="ap-tbtn" onClick="{{zoomIn}}" aria-label="Zoom in"><svg class="icon-sm"><use href="#i-plus"/></svg></button>
+    <button type="button" class="ap-tbtn" onClick="{{zoomFit}}" aria-label="Fit to view"><svg class="icon-sm"><use href="#i-fit"/></svg></button>
+  </div>
+</div>
+
+<!-- main row -->
+<div style="display:flex;height:812px;">
+
+  <!-- sidebar -->
+  <div class="ap-sidebar" style="width:300px;flex-shrink:0;padding:18px 16px;overflow:hidden;display:flex;flex-direction:column;">
+
+    <div class="ap-side-title">Ranked paths</div>
+    <sc-for list="{{pathRows}}" as="p" hint-placeholder-count="3">
+      <button type="button" class="ap-pathrow {{p.cls}}" style="text-align:left;width:100%;display:block;" onClick="{{p.pick}}">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
+          <span class="badge {{p.sevClass}}">{{p.sevLabel}}</span>
+          <span class="mono" style="font-size:11px;color:#9AA0A8;">{{p.conf}}</span>
+        </div>
+        <div style="font-size:12px;line-height:1.4;color:#EDEFF1;">{{p.label}}</div>
+      </button>
+    </sc-for>
+
+    <div class="ap-side-title" style="margin-top:6px;">Filter by severity</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;">
+      <sc-for list="{{sevChips}}" as="s" hint-placeholder-count="5">
+        <button type="button" class="ap-fchip" style="{{s.style}}" onClick="{{s.pick}}">{{s.label}}</button>
+      </sc-for>
+    </div>
+
+    <div class="ap-side-title">Filter by confidence</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px;">
+      <sc-for list="{{confChips}}" as="c" hint-placeholder-count="3">
+        <button type="button" class="ap-fchip" style="{{c.style}}" onClick="{{c.pick}}">{{c.label}}</button>
+      </sc-for>
+    </div>
+
+    <div style="flex-grow:1;"></div>
+
+    <div class="ap-side-title">Legend</div>
+    <div class="ap-legend-row"><span style="display:inline-block;width:14px;height:2px;background:#D92D20;"></span>Risky relationship (severity-coloured)</div>
+    <div class="ap-legend-row"><span style="display:inline-block;width:14px;height:2px;background:#6B7280;"></span>Normal relationship</div>
+    <div class="ap-legend-row"><span style="display:inline-block;width:14px;height:0;border-top:2px dashed #9AA0A8;"></span>Medium confidence</div>
+    <div class="ap-legend-row"><span style="display:inline-block;width:14px;height:0;border-top:2px dotted #9AA0A8;"></span>Low / uncertain confidence</div>
+    <div class="ap-legend-row"><span class="badge badge-crit" style="padding:1px 6px;">Crit</span><span class="badge badge-high" style="padding:1px 6px;">High</span><span class="badge badge-med" style="padding:1px 6px;">Med</span>severity</div>
+    <div class="ap-legend-row" style="border-top:4px solid var(--orange);width:14px;height:0;margin-right:6px;"></div>
+  </div>
+
+  <!-- canvas -->
+  <div style="flex:1;position:relative;overflow:hidden;background:radial-gradient(circle at 30% 20%, #171B1F 0%, #0F1216 70%);">
+    <div style="position:absolute;inset:0;transform:scale({{zoom}});transform-origin:50% 50%;transition:transform .15s;">
+
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;">
+        <sc-for list="{{edges}}" as="eh" hint-placeholder-count="8">
+          <line x1="{{eh.x1}}" y1="{{eh.y1}}" x2="{{eh.x2}}" y2="{{eh.y2}}" stroke="transparent" stroke-width="10" vector-effect="non-scaling-stroke" style="pointer-events:stroke;cursor:pointer;" onClick="{{eh.pick}}"/>
+        </sc-for>
+        <sc-for list="{{edges}}" as="e" hint-placeholder-count="8">
+          <line x1="{{e.x1}}" y1="{{e.y1}}" x2="{{e.x2}}" y2="{{e.y2}}" stroke="{{e.color}}" stroke-width="{{e.width}}" stroke-dasharray="{{e.dash}}" vector-effect="non-scaling-stroke" marker-end="url(#{{e.marker}})" style="pointer-events:none;opacity:{{e.op}};transition:opacity .15s;"/>
+        </sc-for>
+      </svg>
+
+      <sc-for list="{{nodes}}" as="n" hint-placeholder-count="10">
+        <button type="button" class="ap-node-card" style="left:{{n.left}};top:{{n.top}};border-left:4px solid {{n.sevColor}};opacity:{{n.op}};{{n.ring}}" onClick="{{n.pick}}">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:9px;font-weight:700;letter-spacing:.06em;color:#8A9099;text-transform:uppercase;">{{n.roleLabel}}</span>
+            <span style="width:7px;height:7px;border-radius:50%;background:{{n.onlineColor}};"></span>
+          </div>
+          <div style="font-weight:700;font-size:12.5px;color:#EDEFF1;margin-top:6px;">{{n.name}}</div>
+          <div style="font-size:10.5px;color:#8A9099;margin-top:2px;">{{n.zone}}</div>
+          <div style="margin-top:6px;"><span class="badge {{n.sevClass}}" style="font-size:9.5px;padding:2px 7px;">{{n.sevLabel}}</span></div>
+        </button>
+      </sc-for>
+
+      <sc-for list="{{extraNodes}}" as="x" hint-placeholder-count="0">
+        <button type="button" class="ap-node-card" style="left:{{x.left}};top:{{x.top}};border-left:4px solid #454B53;opacity:.55;padding:7px 10px;width:130px;" onClick="{{x.pick}}">
+          <div style="font-size:9px;font-weight:700;letter-spacing:.06em;color:#7C828B;text-transform:uppercase;">Reachable</div>
+          <div style="font-size:11.5px;color:#C6CACF;margin-top:4px;">{{x.name}}</div>
+        </button>
+      </sc-for>
+
+    </div>
+
+    <div class="ap-minimap">
+      <div style="padding:6px 8px;font-size:9.5px;font-weight:700;color:#7C828B;text-transform:uppercase;letter-spacing:.06em;">Overview</div>
+      <svg viewBox="0 0 100 60" style="width:100%;height:66px;">
+        <line x1="9" y1="30" x2="30" y2="30" stroke="#454B53" stroke-width="1"/>
+        <line x1="30" y1="30" x2="52" y2="30" stroke="#454B53" stroke-width="1"/>
+        <line x1="52" y1="30" x2="76" y2="30" stroke="var(--orange)" stroke-width="1.4"/>
+        <circle cx="9" cy="30" r="2.6" fill="#6B7280"/><circle cx="30" cy="30" r="2.6" fill="#6B7280"/><circle cx="52" cy="30" r="2.6" fill="#6B7280"/>
+        <circle cx="76" cy="30" r="3" fill="var(--orange)"/>
+        <rect x="2" y="10" width="90" height="40" fill="none" stroke="#6B7280" stroke-width="0.6" stroke-dasharray="2 2"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- investigation panel -->
+  <sc-if value="{{hasSel}}" hint-placeholder-val="{{false}}">
+  <div class="ap-panel" style="width:380px;flex-shrink:0;overflow-y:auto;">
+    <div class="ap-panel-sec" style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;">
+      <div>
+        <div class="muted" style="text-transform:uppercase;font-size:10.5px;font-weight:700;letter-spacing:.06em;">{{selKind}}</div>
+        <div style="font-size:16px;font-weight:700;margin-top:3px;">{{selName}}</div>
+        <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;"><span class="badge {{selSevClass}}">{{selSevLabel}}</span><span class="muted mono" style="font-size:11.5px;">{{selConf}}</span></div>
+      </div>
+      <button type="button" class="icon-btn" style="color:var(--ink-soft);border:1px solid var(--line);flex-shrink:0;" onClick="{{closePanel}}" aria-label="Close"><svg class="icon-sm"><use href="#i-close"/></svg></button>
+    </div>
+
+    <div class="ap-panel-sec">
+      <div class="ap-panel-h">Summary</div>
+      <p class="rat-p" style="margin:0;font-size:13px;">{{selSummary}}</p>
+    </div>
+
+    <div class="ap-panel-sec">
+      <div class="ap-panel-h">Why it matters</div>
+      <p class="rat-p" style="margin:0;font-size:13px;">{{selWhy}}</p>
+    </div>
+
+    <div class="ap-panel-sec">
+      <div class="ap-panel-h">Zone &amp; protocol context</div>
+      <div class="ap-tag">{{selZone}}</div><div class="ap-tag">{{selProtocol}}</div><div class="ap-tag">{{selState}}</div>
+    </div>
+
+    <div class="ap-panel-sec">
+      <div class="ap-panel-h">Supporting evidence</div>
+      <sc-for list="{{selEvidence}}" as="ev" hint-placeholder-count="2">
+        <div style="display:flex;gap:8px;font-size:12.8px;margin-bottom:6px;line-height:1.4;"><span style="color:var(--ink-faint);">•</span><span>{{ev.text}}</span></div>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{hasVulns}}" hint-placeholder-val="{{false}}">
+    <div class="ap-panel-sec">
+      <div class="ap-panel-h">Related vulnerabilities</div>
+      <sc-for list="{{selVulns}}" as="v" hint-placeholder-count="1">
+        <div class="ap-tag" style="background:var(--crit-tint);border-color:var(--crit-line);color:var(--crit);">{{v.text}}</div>
+      </sc-for>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{hasRelated}}" hint-placeholder-val="{{false}}">
+    <div class="ap-panel-sec">
+      <div class="ap-panel-h">Related findings</div>
+      <sc-for list="{{selRelated}}" as="r" hint-placeholder-count="1">
+        <div style="font-size:12.8px;margin-bottom:6px;">{{r.text}}</div>
+      </sc-for>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{hasPaths}}" hint-placeholder-val="{{false}}">
+    <div class="ap-panel-sec">
+      <div class="ap-panel-h">Appears in path</div>
+      <sc-for list="{{selPaths}}" as="pp" hint-placeholder-count="1">
+        <div class="ap-tag" style="background:var(--orange-tint);border-color:var(--high-line);color:var(--orange-dark);">{{pp.text}}</div>
+      </sc-for>
+    </div>
+    </sc-if>
+
+    <div class="ap-panel-sec" style="border-bottom:none;">
+      <div class="ap-panel-h">Recommended next steps</div>
+      <sc-for list="{{selSteps}}" as="st" hint-placeholder-count="2">
+        <div style="display:flex;gap:8px;font-size:12.8px;margin-bottom:8px;line-height:1.4;"><span class="mono" style="color:var(--orange-dark);font-weight:700;">{{st.n}}</span><span>{{st.text}}</span></div>
+      </sc-for>
+      <div style="display:flex;gap:10px;margin-top:6px;">
+        <button type="button" class="btn btn-primary btn-sm">Assign investigation</button>
+        <button type="button" class="btn btn-ghost btn-sm">Open asset view →</button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":960}}'>
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    this.state = {
+      activePath: "p1",
+      showAll: false,
+      showBlast: false,
+      sevOn: { crit:true, high:true, med:true, low:true, unknown:true },
+      confOn: { high:true, med:true, low:true },
+      selection: null,
+      zoom: 1
+    };
+  }
+  render_defs(){
+    const NODES = [
+      { id:"ews",  x:9,  y:48, roleLabel:"Source", name:"EWS-14 Workstation", zone:"Zone 2 · Utilities", sevKey:"crit", sevClass:"badge-crit", sevLabel:"Critical", sevColor:"#D92D20", online:"good", pathIds:["p1"] },
+      { id:"jump", x:31, y:48, roleLabel:"Pivot",  name:"SRV-22 Jump Host",   zone:"Zone 2 · Utilities", sevKey:"high", sevClass:"badge-high", sevLabel:"High",     sevColor:"#F97316", online:"good", pathIds:["p1"] },
+      { id:"dc",   x:54, y:48, roleLabel:"Pivot",  name:"Domain Controller",  zone:"Zone 1 · Production", sevKey:"high", sevClass:"badge-high", sevLabel:"High",   sevColor:"#F97316", online:"good", pathIds:["p1"] },
+      { id:"hist", x:78, y:48, roleLabel:"Target", name:"Historian DB",       zone:"Zone 1 · Production", sevKey:"crit", sevClass:"badge-crit", sevLabel:"Critical · Crown jewel", sevColor:"#D92D20", online:"good", pathIds:["p1"] },
+      { id:"vpn",  x:9,  y:17, roleLabel:"Source", name:"Vendor VPN Concentrator", zone:"DMZ", sevKey:"high", sevClass:"badge-high", sevLabel:"High", sevColor:"#F97316", online:"good", pathIds:["p2"] },
+      { id:"hmi",  x:31, y:17, roleLabel:"Target", name:"HMI-07 Operator Panel", zone:"Zone 1 · Production", sevKey:"high", sevClass:"badge-high", sevLabel:"High", sevColor:"#F97316", online:"good", pathIds:["p2"] },
+      { id:"wifi", x:9,  y:80, roleLabel:"Source", name:"Guest Wi-Fi AP", zone:"Zone 3 perimeter", sevKey:"med", sevClass:"badge-med", sevLabel:"Medium", sevColor:"#B45309", online:"good", pathIds:["p3"] },
+      { id:"esw",  x:31, y:80, roleLabel:"Pivot",  name:"Engineering Switch SW-14", zone:"Zone 3 perimeter", sevKey:"med", sevClass:"badge-med", sevLabel:"Medium", sevColor:"#B45309", online:"good", pathIds:["p3"] },
+      { id:"plc",  x:54, y:80, roleLabel:"Target", name:"PLC Line 3 Controller", zone:"Zone 3 perimeter", sevKey:"med", sevClass:"badge-med", sevLabel:"Medium", sevColor:"#B45309", online:"unknown", pathIds:["p3"] },
+      { id:"cluster", x:93, y:48, roleLabel:"Cluster", name:"+34 More Assets", zone:"Multiple zones", sevKey:null, sevClass:"badge-unknown", sevLabel:"Unknown", sevColor:"#6B7280", online:"unknown", pathIds:[] }
+    ];
+    const EXTRA = [
+      { id:"ext1", x:90, y:30, name:"ENG-31 Workstation" },
+      { id:"ext2", x:97, y:48, name:"SRV-40 File Server" },
+      { id:"ext3", x:90, y:66, name:"HIST-BKP-02" }
+    ];
+    const EDGES = [
+      { id:"e1", from:"ews", to:"jump", sevKey:"high", conf:"high", color:"#F97316", pathIds:["p1"] },
+      { id:"e2", from:"jump", to:"dc",  sevKey:"high", conf:"high", color:"#F97316", pathIds:["p1"] },
+      { id:"e3", from:"dc",  to:"hist", sevKey:"crit", conf:"high", color:"#D92D20", pathIds:["p1"] },
+      { id:"e4", from:"vpn", to:"hmi",  sevKey:"high", conf:"med",  color:"#F97316", pathIds:["p2"] },
+      { id:"e5", from:"wifi", to:"esw", sevKey:"med",  conf:"low",  color:"#B45309", pathIds:["p3"] },
+      { id:"e6", from:"esw", to:"plc",  sevKey:"med",  conf:"med",  color:"#B45309", pathIds:["p3"] },
+      { id:"e7", from:"jump", to:"esw", sevKey:"low",  conf:"high", color:"#6B7280", pathIds:[] },
+      { id:"e8", from:"hist", to:"cluster", sevKey:null, conf:"med", color:"#6B7280", pathIds:[] }
+    ];
+    const INFO = {
+      ews:{ kind:"Node", name:"EWS-14 — Engineering Workstation", sevClass:"badge-crit", sevLabel:"Critical", conf:"Source / Entry point", zone:"Zone 2 · Utilities", protocol:"RDP inbound (TCP/3389)", state:"Online",
+        summary:"Windows engineering workstation used for PLC programming. Exposes RDP directly to the internet through a misconfigured firewall rule.",
+        why:"Confirmed entry point for the highest-confidence path to a crown-jewel asset. No MFA on remote access; unpatched for 94 days.",
+        evidence:["Internet-facing scan confirmed RDP (3389) reachable from outside the OT firewall.","Network Level Authentication is disabled — no login required to attempt access.","Last patched 94 days ago; 2 known critical CVEs remain unpatched."],
+        vulns:["CVE-2024-21334 — RDP remote code execution (Critical)","Missing Network Level Authentication"],
+        related:["Unpatched remote access exposed to internet — Critical, open 2 days"],
+        paths:["Path 1 · reaches Historian DB (crown jewel)"],
+        steps:["Disable internet-facing RDP or place behind VPN + MFA","Apply pending OS security patches","Move EWS-14 to the restricted engineering VLAN"]},
+      jump:{ kind:"Node", name:"SRV-22 — Jump Host", sevClass:"badge-high", sevLabel:"High", conf:"Pivot asset", zone:"Zone 2 · Utilities", protocol:"SMB (445) · RDP (3389)", state:"Online",
+        summary:"Shared jump server used by engineering staff to reach Zone 1 systems.",
+        why:"Sits on the only route between the internet-facing workstation and the domain controller — removing this hop breaks the path.",
+        evidence:["Local admin account 'svc-eng' is shared with 6 other hosts (credential reuse).","SMBv1 is still enabled."],
+        vulns:["SMBv1 enabled — legacy, unsupported protocol"],
+        related:["Credential reuse across engineering hosts — High"],
+        paths:["Path 1 · reaches Historian DB (crown jewel)"],
+        steps:["Rotate and de-duplicate the svc-eng credential","Disable SMBv1","Restrict jump host logons to named accounts with MFA"]},
+      dc:{ kind:"Node", name:"Domain Controller — DC-01", sevClass:"badge-high", sevLabel:"High", conf:"Pivot asset", zone:"Zone 1 · Production", protocol:"Kerberos / LDAP (88, 389)", state:"Online",
+        summary:"Primary Active Directory controller for the production zone. Trusted by Historian DB for authentication.",
+        why:"Compromise here yields credentials Historian DB trusts directly, collapsing the final hop to a simple authenticated connection.",
+        evidence:["Historian DB accepts domain credentials with no additional factor.","A Kerberoastable service account was detected (svc-historian)."],
+        vulns:["Kerberoastable service account (svc-historian)"],
+        related:["Kerberoastable service account — High"],
+        paths:["Path 1 · reaches Historian DB (crown jewel)"],
+        steps:["Convert svc-historian to a managed service account","Require MFA for Historian DB authentication","Alert on anomalous Kerberos ticket requests"]},
+      hist:{ kind:"Node", name:"Historian DB — Crown Jewel", sevClass:"badge-crit", sevLabel:"Critical", conf:"Target asset", zone:"Zone 1 · Production", protocol:"OPC-UA (4840) · SQL (1433)", state:"Online",
+        summary:"Central process historian storing production recipes, batch records and control setpoints.",
+        why:"Designated crown-jewel asset. Unauthorized write access could alter production parameters; read access exposes proprietary recipes.",
+        evidence:["No network segmentation between DC-01 and Historian DB.","Service account holds domain-admin-equivalent rights (over-provisioned)."],
+        vulns:["Over-provisioned service account (domain-admin-equivalent)"],
+        related:["Historian DB risk elevated to Critical — 38 min ago"],
+        paths:["Path 1 · reached from EWS-14 via 2 pivots"],
+        steps:["Segment Historian DB onto its own VLAN with an inspected gateway","De-provision the over-privileged service account","Enable write-access alerting on production recipes"]},
+      vpn:{ kind:"Node", name:"Vendor VPN Concentrator", sevClass:"badge-high", sevLabel:"High", conf:"Source / Entry point", zone:"DMZ", protocol:"IPsec VPN", state:"Online",
+        summary:"Always-on VPN tunnel maintained for a third-party HVAC vendor's remote support access.",
+        why:"Vendor-managed credentials are outside direct control and are reused across sites.",
+        evidence:["Shared vendor credential not rotated in 11 months.","Tunnel is active 24/7 regardless of support need."],
+        vulns:["Shared, long-lived vendor credential"],
+        related:["Default vendor credentials in use — High"],
+        paths:["Path 2 · reaches HMI-07"],
+        steps:["Time-box vendor access to scheduled maintenance windows","Rotate the shared credential; issue per-technician accounts","Require approval before each session"]},
+      hmi:{ kind:"Node", name:"HMI-07 — Operator Panel", sevClass:"badge-high", sevLabel:"High", conf:"Target asset", zone:"Zone 1 · Production", protocol:"VNC (5900)", state:"Online",
+        summary:"Touchscreen HMI used by operators to monitor and adjust line 2 setpoints.",
+        why:"Direct control-plane access — a compromised session could change setpoints without going through change control.",
+        evidence:["VNC service uses a default vendor password.","No session recording or dual authorization for setpoint changes."],
+        vulns:["Default credentials on VNC service"],
+        related:["Default vendor credentials on HMI — High, open 5 days"],
+        paths:["Path 2 · reached from Vendor VPN"],
+        steps:["Change default VNC credentials; enable encryption","Require dual authorization for setpoint changes","Log and alert on remote HMI sessions"]},
+      wifi:{ kind:"Node", name:"Guest Wi-Fi Access Point", sevClass:"badge-med", sevLabel:"Medium", conf:"Source / Entry point", zone:"Zone 3 perimeter", protocol:"802.11 Wi-Fi", state:"Online",
+        summary:"Guest wireless network physically adjacent to the safety-zone engineering switch. Reachability evidence is partial.",
+        why:"Confidence is intentionally shown as low — inferred from incomplete isolation testing, not a confirmed session.",
+        evidence:["2 of 5 access points still pending isolation verification.","No confirmed cross-VLAN packet capture yet."],
+        vulns:["Wireless client isolation not fully verified"],
+        related:["Guest network segmentation incomplete — Medium"],
+        paths:["Path 3 · reaches PLC Line 3 (low confidence)"],
+        steps:["Complete isolation verification on remaining access points","Move guest SSID to a dedicated, firewalled VLAN","Re-score this path once verification completes"]},
+      esw:{ kind:"Node", name:"Engineering Switch — SW-14", sevClass:"badge-med", sevLabel:"Medium", conf:"Pivot asset", zone:"Zone 3 perimeter", protocol:"802.1Q · SNMP (161)", state:"Online",
+        summary:"Managed switch bridging the guest wireless VLAN and the engineering subnet serving PLC Line 3.",
+        why:"If wireless isolation fails, this switch has no ACL preventing lateral movement into the PLC subnet.",
+        evidence:["No inter-VLAN ACL between guest and engineering subnets.","Management interface uses a default SNMP community string."],
+        vulns:["Default SNMP community string ('public')"],
+        related:[],
+        paths:["Path 3 · reaches PLC Line 3 (low confidence)"],
+        steps:["Add an inter-VLAN ACL blocking guest → engineering traffic","Change the default SNMP community string","Disable unused switch ports"]},
+      plc:{ kind:"Node", name:"PLC Line 3 Controller", sevClass:"badge-med", sevLabel:"Medium", conf:"Target asset", zone:"Zone 3 perimeter", protocol:"Modbus TCP (502)", state:"State unknown",
+        summary:"Programmable controller for packaging line 3. Firmware is past end-of-life.",
+        why:"Reachable target if the wireless hop is confirmed; firmware cannot be patched, so network controls are the primary defense.",
+        evidence:["Firmware reached end-of-life 14 months ago.","Modbus TCP accepts unauthenticated write commands."],
+        vulns:["End-of-life firmware, no vendor patches available","Unauthenticated Modbus write access"],
+        related:["Firmware end-of-life across PLC line — High, 12 assets"],
+        paths:["Path 3 · reached from Guest Wi-Fi (low confidence)"],
+        steps:["Deploy a Modbus-aware firewall in front of the PLC line","Plan a hardware refresh for end-of-life controllers","Restrict write commands to the historian's authorized range"]},
+      cluster:{ kind:"Node", name:"+34 Additional Reachable Assets", sevClass:"badge-unknown", sevLabel:"Unknown", conf:"Blast radius (collapsed)", zone:"Multiple zones", protocol:"Multiple protocols", state:"Mixed",
+        summary:"Assets reachable from Historian DB if it is compromised, collapsed here to keep the primary path legible. Toggle “Show blast radius” to preview a sample.",
+        why:"Represents the broader blast radius beyond the immediate path — shown collapsed by default so the investigation stays focused.",
+        evidence:["34 assets share a flat subnet with Historian DB.","12 of those have no host-based firewall."],
+        vulns:[], related:[], paths:[],
+        steps:["Review flat-subnet assets for segmentation opportunities","Prioritise the 12 assets with no host firewall"]},
+      e1:{ kind:"Edge", name:"EWS-14 → Jump Host", sevClass:"badge-high", sevLabel:"High", conf:"92% · High confidence", zone:"Zone 2 · Utilities", protocol:"RDP (TCP/3389)", state:"Directed · risky",
+        summary:"Direct RDP session from the compromised workstation to the shared jump host using cached local-admin credentials.",
+        why:"Confirmed via authentication logs — an observed relationship, not an inferred one.",
+        evidence:["3 successful RDP sessions logged from EWS-14 to SRV-22 in the past 30 days, outside business hours.","Session used the shared 'svc-eng' local admin account."],
+        vulns:[], related:[], paths:["Path 1"],
+        steps:["Disable direct RDP from engineering workstations to the jump host","Require a bastion host plus MFA for this hop"]},
+      e2:{ kind:"Edge", name:"Jump Host → Domain Controller", sevClass:"badge-high", sevLabel:"High", conf:"90% · High confidence", zone:"Zone 2 → Zone 1", protocol:"SMB (445) · Kerberos (88)", state:"Directed · risky",
+        summary:"Cross-zone SMB and Kerberos traffic from the jump host into the production domain controller.",
+        why:"Crosses the Zone 2 → Zone 1 boundary with no inspection point — the segmentation gap that lets the path continue.",
+        evidence:["Firewall allows SMB and Kerberos from the full Zone 2 subnet to DC-01.","No IDS signature coverage on this segment."],
+        vulns:[], related:[], paths:["Path 1"],
+        steps:["Narrow the firewall rule to only the jump host, not the full subnet","Add IDS coverage at the Zone 2 / Zone 1 boundary"]},
+      e3:{ kind:"Edge", name:"Domain Controller → Historian DB", sevClass:"badge-crit", sevLabel:"Critical", conf:"95% · High confidence", zone:"Zone 1 · Production", protocol:"OPC-UA · trusted auth", state:"Directed · risky",
+        summary:"Historian DB trusts domain credentials directly with no additional factor or network inspection.",
+        why:"The final and highest-risk hop — any account authenticated against DC-01 can reach the crown-jewel asset.",
+        evidence:["Historian DB configuration confirms domain-trust authentication is enabled.","No network ACL restricts which hosts may open an OPC-UA session."],
+        vulns:[], related:[], paths:["Path 1"],
+        steps:["Require a dedicated, MFA-backed credential for Historian DB","Restrict OPC-UA sessions to an explicit allow-list of hosts"]},
+      e4:{ kind:"Edge", name:"Vendor VPN → HMI-07", sevClass:"badge-high", sevLabel:"High", conf:"78% · Medium confidence", zone:"DMZ → Zone 1", protocol:"VNC (TCP/5900)", state:"Directed · risky",
+        summary:"VPN tunnel terminates directly onto the production VLAN, with a VNC session observed to HMI-07.",
+        why:"Bypasses the usual DMZ inspection point — the VPN concentrator routes straight to the HMI subnet.",
+        evidence:["VPN routing grants access to the full Zone 1 HMI subnet, not just HVAC equipment.","2 VNC sessions observed in 90 days outside scheduled maintenance."],
+        vulns:[], related:[], paths:["Path 2"],
+        steps:["Scope VPN routing to only the HVAC equipment it supports","Require session approval and recording for HMI access"]},
+      e5:{ kind:"Edge", name:"Guest Wi-Fi → Engineering Switch", sevClass:"badge-med", sevLabel:"Medium", conf:"45% · Low confidence — partial evidence", zone:"Zone 3 perimeter", protocol:"802.1Q / ARP", state:"Directed · unconfirmed",
+        summary:"Possible bridging between the guest wireless VLAN and the engineering switch; isolation testing is incomplete.",
+        why:"Confidence is shown as low deliberately — this relationship is inferred, not a confirmed session.",
+        evidence:["2 of 5 access points still pending isolation verification.","No confirmed cross-VLAN packet capture yet."],
+        vulns:[], related:[], paths:["Path 3"],
+        steps:["Complete isolation testing on the remaining access points","Re-score this edge once testing finishes"]},
+      e6:{ kind:"Edge", name:"Engineering Switch → PLC Line 3", sevClass:"badge-med", sevLabel:"Medium", conf:"60% · Medium confidence", zone:"Zone 3 perimeter", protocol:"Modbus TCP (502)", state:"Directed · risky",
+        summary:"Unauthenticated Modbus TCP path from the engineering switch to the PLC controller.",
+        why:"Even without the wireless hop confirmed, this segment alone lacks authentication and should be hardened.",
+        evidence:["Modbus TCP accepts write function codes with no source restriction."],
+        vulns:[], related:[], paths:["Path 3"],
+        steps:["Deploy a Modbus-aware firewall between the switch and the PLC","Restrict write function codes to the historian only"]},
+      e7:{ kind:"Edge", name:"Jump Host → Engineering Switch", sevClass:"badge-low", sevLabel:"Low · normal", conf:"Observed · routine", zone:"Zone 2 → Zone 3", protocol:"SNMP (monitoring)", state:"Directed · normal",
+        summary:"Routine SNMP polling used by the jump host to monitor switch health. Shown for contrast with risky relationships.",
+        why:"Illustrates the difference between expected infrastructure traffic and the risky relationships that make up an attack path.",
+        evidence:["Matches the documented monitoring schedule (every 5 minutes).","Read-only community string; no write operations observed."],
+        vulns:[], related:[], paths:[],
+        steps:["No action required — continue routine monitoring"]},
+      e8:{ kind:"Edge", name:"Historian DB → Blast radius", sevClass:"badge-unknown", sevLabel:"Unknown", conf:"Not yet scored", zone:"Multiple zones", protocol:"Multiple", state:"Collapsed group",
+        summary:"Represents the wider set of assets reachable if Historian DB is compromised, kept collapsed to avoid overwhelming the primary investigation.",
+        why:"Useful for scoping blast-radius conversations without cluttering the default view.",
+        evidence:["34 assets share a flat subnet with Historian DB."],
+        vulns:[], related:[], paths:[],
+        steps:["Expand and triage once the primary path is contained"]}
+    };
+    return { NODES, EXTRA, EDGES, INFO };
+  }
+  renderVals(){
+    const s = this.state;
+    const { NODES, EXTRA, EDGES, INFO } = this.render_defs();
+    const pathFactor = (ids) => {
+      if (s.showAll) return 1;
+      if (!ids || ids.length === 0) return 1;
+      return ids.indexOf(s.activePath) !== -1 ? 1 : 0.18;
+    };
+    const sevFactor = (key) => (!key ? 1 : (s.sevOn[key] ? 1 : 0.06));
+    const confFactor = (key) => (!key ? 1 : (s.confOn[key] ? 1 : 0.06));
+    const onlineColor = (o) => o === "good" ? "var(--good)" : (o === "unknown" ? "var(--unknown)" : "var(--med)");
+
+    const nodes = NODES.map((n) => {
+      let op = n.id === "cluster" ? (s.showBlast ? 1 : 0.55) : pathFactor(n.pathIds) * sevFactor(n.sevKey);
+      const selected = s.selection === n.id;
+      return {
+        id: n.id, left: n.x + "%", top: n.y + "%",
+        roleLabel: n.roleLabel, name: n.name, zone: n.zone,
+        sevClass: n.sevClass, sevLabel: n.sevLabel, sevColor: n.sevColor,
+        onlineColor: onlineColor(n.online),
+        op: op.toFixed(2),
+        ring: selected ? "border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,106,26,.3);z-index:5;" : "",
+        pick: () => this.setState({ selection: n.id })
+      };
+    });
+
+    const extraNodes = s.showBlast ? EXTRA.map((x) => ({
+      id: x.id, left: x.x + "%", top: x.y + "%", name: x.name,
+      pick: () => this.setState({ selection: "cluster" })
+    })) : [];
+
+    const byId = {}; NODES.forEach((n) => byId[n.id] = n);
+    const edges = EDGES.map((e) => {
+      const from = byId[e.from], to = byId[e.to];
+      let op;
+      if (e.id === "e8") { op = s.showBlast ? 0.8 : 0.16; }
+      else { op = pathFactor(e.pathIds) * sevFactor(e.sevKey) * confFactor(e.conf); }
+      const dash = e.conf === "low" ? "1.5 2.5" : (e.conf === "med" ? "3.5 2.5" : "0");
+      const marker = e.sevKey === "crit" ? "mk-crit" : (e.sevKey === "high" ? "mk-high" : (e.sevKey === "med" ? "mk-med" : "mk-gray"));
+      return {
+        id: e.id, x1: from.x, y1: from.y, x2: to.x, y2: to.y,
+        color: e.color, width: e.sevKey === "crit" ? "2.6" : "2",
+        dash, marker, op: op.toFixed(2),
+        pick: () => this.setState({ selection: e.id })
+      };
+    });
+
+    const pathDefs = [
+      { id:"p1", label:"EWS-14 → Jump Host → Domain Controller → Historian DB", sevClass:"badge-crit", sevLabel:"Critical", conf:"92%" },
+      { id:"p2", label:"Vendor VPN → HMI-07", sevClass:"badge-high", sevLabel:"High", conf:"78%" },
+      { id:"p3", label:"Guest Wi-Fi → Engineering Switch → PLC Line 3", sevClass:"badge-med", sevLabel:"Medium", conf:"45%" }
+    ];
+    const pathRows = pathDefs.map((p) => ({
+      label: p.label, sevClass: p.sevClass, sevLabel: p.sevLabel, conf: p.conf,
+      cls: s.activePath === p.id ? "selected" : "",
+      pick: () => this.setState({ activePath: p.id, showAll: false })
+    }));
+
+    const sevDefs = [
+      { key:"crit", label:"Critical", color:"var(--crit)" },
+      { key:"high", label:"High", color:"var(--orange)" },
+      { key:"med", label:"Medium", color:"var(--med)" },
+      { key:"low", label:"Low", color:"var(--low)" },
+      { key:"unknown", label:"Unknown", color:"var(--unknown)" }
+    ];
+    const sevChips = sevDefs.map((d) => ({
+      label: d.label,
+      style: (s.sevOn[d.key] ? ("background:" + d.color + ";border-color:" + d.color + ";color:#12100D;") : ""),
+      pick: () => this.setState({ sevOn: { ...s.sevOn, [d.key]: !s.sevOn[d.key] } })
+    }));
+    const confDefs = [{key:"high",label:"High"},{key:"med",label:"Medium"},{key:"low",label:"Low / uncertain"}];
+    const confChips = confDefs.map((d) => ({
+      label: d.label,
+      style: s.confOn[d.key] ? "background:var(--orange);border-color:var(--orange);color:#12100D;" : "",
+      pick: () => this.setState({ confOn: { ...s.confOn, [d.key]: !s.confOn[d.key] } })
+    }));
+
+    const info = s.selection ? INFO[s.selection] : null;
+    const wrap = (arr) => (arr || []).map((t) => ({ text: t }));
+
+    return {
+      nodes, extraNodes, edges, pathRows, sevChips, confChips,
+      singleCls: s.showAll ? "" : "active",
+      allCls: s.showAll ? "active" : "",
+      setSingle: () => this.setState({ showAll: false }),
+      setAll: () => this.setState({ showAll: true }),
+      blastCls: s.showBlast ? "active" : "",
+      toggleBlast: () => this.setState({ showBlast: !s.showBlast }),
+      zoom: s.zoom, zoomPct: Math.round(s.zoom * 100) + "%",
+      zoomIn: () => this.setState({ zoom: Math.min(1.6, s.zoom + 0.15) }),
+      zoomOut: () => this.setState({ zoom: Math.max(0.6, s.zoom - 0.15) }),
+      zoomFit: () => this.setState({ zoom: 1 }),
+      hasSel: !!info,
+      closePanel: () => this.setState({ selection: null }),
+      selKind: info ? info.kind : "",
+      selName: info ? info.name : "",
+      selSevClass: info ? info.sevClass : "",
+      selSevLabel: info ? info.sevLabel : "",
+      selConf: info ? info.conf : "",
+      selZone: info ? info.zone : "",
+      selProtocol: info ? info.protocol : "",
+      selState: info ? info.state : "",
+      selSummary: info ? info.summary : "",
+      selWhy: info ? info.why : "",
+      selEvidence: info ? wrap(info.evidence) : [],
+      selVulns: info ? wrap(info.vulns) : [],
+      hasVulns: !!(info && info.vulns && info.vulns.length),
+      selRelated: info ? wrap(info.related) : [],
+      hasRelated: !!(info && info.related && info.related.length),
+      selPaths: info ? wrap(info.paths) : [],
+      hasPaths: !!(info && info.paths && info.paths.length),
+      selSteps: info ? (info.steps || []).map((t, i) => ({ n: (i+1) + ".", text: t })) : []
+    };
+  }
+}
+</script>
+</body>
+</html>
